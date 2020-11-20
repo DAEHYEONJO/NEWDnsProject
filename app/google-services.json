@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "702220256620",
+    "firebase_url": "https://dnsprojectfb.firebaseio.com",
+    "project_id": "dnsprojectfb",
+    "storage_bucket": "dnsprojectfb.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:702220256620:android:4d1e0010c7e26eada39f49",
+        "android_client_info": {
+          "package_name": "com.example.dnsproject"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "702220256620-h9ea1m6vhsk66i90kmb08q5el3jkh145.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCzvbxrp96OXcyFbxhlQ-t7odE6VOEqd_k"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "702220256620-h9ea1m6vhsk66i90kmb08q5el3jkh145.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
