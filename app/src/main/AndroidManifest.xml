@@ -15,8 +15,9 @@
         <activity android:name=".RecommendExerciseActivity"></activity>
         <activity android:name=".ExerciseRecordActivity" />
         <activity android:name=".ManageRoutineActivity" />
-        <activity android:name=".ManageRoutine" />
-        <activity android:name=".StopWatchActivity" />
+        <activity android:name=".StopWatchActivity" >
+
+        </activity>
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
