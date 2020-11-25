@@ -1,0 +1,7 @@
+{
+  "amModelFile"   : "info_heycloi_cn_anti_am.dat",
+  "netModelFile"  : "info_heycloi_cn_anti_tree.dat",
+  "sensitivity"   : 30,
+  "cm"            : 0.01,
+  "weight"        : 0
+}

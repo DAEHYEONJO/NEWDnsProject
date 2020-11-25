@@ -1,0 +1,7 @@
+{
+  "amModelFile" : "airstar_cn.am",
+  "netModelFile" : "airstar_cn.net",
+  "sensitivity":40,
+  "cm":0.01,
+  "weight":0
+}

@@ -1,0 +1,59 @@
+{
+	"enableHttp2": true,
+	"serverIp": "gw.thinqai.net",
+	"serverPort": "38443",
+	"voicePath": "voice",
+	"controlPath": "ws",
+	"appName": "com.lge.deepthinq.test",
+	"authToken": "lge-token-string",
+	"customKey": "ad8a3e54-a878103825f82ee40be5c12c25f96ed0714b0-ebb24795adb79a0f4e4",
+	"deviceId": "konkuk_project_202009_001",
+	"deviceType": "sdk-dev-machine",
+	"locale": "ko-KR",
+	"recognitionMode": "dictation",
+	"enableLocalPcmDump" : false,
+	"localPcmDumpPath" : "./debug_dump",
+	"userId": "baily_h2_test",
+	"asr": {
+		"data": {
+			"channels": 1,
+			"codec": "pcm",
+			"engine": "lgasr",
+			"epd": "server",
+			"epdSkipBytes": 0,
+			"enableKeywordReject": false,
+			"nBest": 1,
+			"needKwdResult": false,
+			"enablePartialResult": true,
+			"enablePcmDump": true,
+			"rate": 16000,
+			"triggerWord": "none",
+			"enableDeveloperOption": false
+		},
+		"support": true,
+		"version": "2.0"
+	},
+	"userAgent": {
+		"model": "NA",
+		"os": "linux",
+		"pcmSource": "file",
+		"product": "NA",
+		"version": "1.0"
+	},
+	"nlp": {
+		"data": {
+			"function": "ANALYSIS",
+			"language": "KOR",
+			"country": "KR",
+			"deviceId": "SOMETHING_UNIQUE",
+			"timeZone": "Asia/Seoul",
+			"deviceTime": "1529108858000",
+			"inputType": "SPEECH",
+			"config": {
+				"nlpVersion": "1"
+			}
+		},
+		"support": false,
+		"version": "1.0"
+	}
+}

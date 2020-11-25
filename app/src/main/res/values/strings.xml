@@ -1,5 +1,53 @@
 <resources>
     <string name="app_name">DnsProject</string>
+    <string name="language">Language</string>
+    <string name="keyword">Keyword</string>
+    <string name="sensitivity">Sensitivity</string>
+    <string name="input_type">Input type</string>
+    <string name="file">File</string>
+    <string name="mic">Mic</string>
+    <string name="path">Path</string>
+    <string name="refresh">Refresh</string>
+    <string name="load">Load</string>
+    <string name="select_a_file">Select a file.</string>
+    <string name="common_start">Start</string>
+    <string name="common_end">End</string>
+    <string name="common_press_start">Press start button...</string>
+    <string name="common_speak">Speak...</string>
+    <string name="sens_not_valid">Sensitivity is not valid</string>
+    <string name="file_not_valid">File is not valid or not selected.</string>
+    <string name="not_existed_path">Not existed path.</string>
+    <string name="selected_dir_empty">Selected directory is empty.</string>
+    <string name="detected">"\"%1$s\" detected in embedded engine."</string>
+    <string name="recognized_by_server">"Recognized by server.\nServer Message: [ %1$s ]"</string>
+    <string name="not_recognized_by_server">"Rejected by server.\nServer Message: [ %1$s ]"</string>
+    <string name="error">"ERROR : %1$s"</string>
+    <string name="permission_notice">External Storage and Read phone state permissions are mandatory.</string>
+    <string name="stopped_by_user">Stopped by user.</string>
+    <string name="file_closed">File closed.</string>
+    <string name="spinner">"Copying files, please wait..."</string>
+    <string name="module">"Module"</string>
+    <string name="embedded">"Embedded"</string>
+    <string name="hybrid">"Hybrid"</string>
+    <string name="file_reading">Reading file...</string>
+    <string name="api_state">API state test</string>
+    <!-- For config.json -->
+    <string name="popup_msg_config_error">json config has problem.</string>
+    <string name="finish">Finish</string>
+    <string name="settings">Settings</string>
 
+    <string-array name="array_language">
+        <item>ko-KR</item>
+        <item>en-US</item>
+        <item>zh-CN</item>
+        <item>ja-JP</item>
+    </string-array>
+
+    <!-- array_keyword must match pair with keyword_codes in integers.xml -->
+    <string-array name="array_keyword">
+        <item>airstar</item>
+        <item>hilg</item>
+        <item>heycloi</item>
+    </string-array>
 
 </resources>
