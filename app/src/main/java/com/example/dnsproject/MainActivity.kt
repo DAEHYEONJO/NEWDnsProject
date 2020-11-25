@@ -53,7 +53,7 @@ class MainActivity : AppCompatActivity() {
         }
         RoutineButton.setOnClickListener {
             val nextIntent = Intent(this@MainActivity, ManageRoutineActivity::class.java)
-            //nextIntent.putExtra("nameKey", userData)
+            nextIntent.putExtra("nameKey", routineList)
             startActivity(nextIntent)
         }
 

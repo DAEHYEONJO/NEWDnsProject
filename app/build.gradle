@@ -41,5 +41,6 @@ dependencies {
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
     implementation 'com.google.code.gson:gson:2.8.5'
+    implementation 'com.sothree.slidinguppanel:library:3.4.0'
 
 }
