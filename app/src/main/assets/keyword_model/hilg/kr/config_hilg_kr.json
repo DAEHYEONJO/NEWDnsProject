@@ -1,0 +1,7 @@
+{
+   "amModelFile": "hilg_kr_v20181115.am",
+   "netModelFile": "hilg_kr_v20181115.net",
+   "sensitivity":10,
+   "cm":0.01,
+   "weight":0
+}
