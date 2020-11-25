@@ -16,6 +16,7 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        //아 배고파..
 
         val TimerBut : Button = findViewById(R.id.TimerButton)
         val RecommBut : Button = findViewById(R.id.RecommButton)
