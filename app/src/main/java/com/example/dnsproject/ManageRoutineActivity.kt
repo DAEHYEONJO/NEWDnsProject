@@ -29,8 +29,6 @@ class ManageRoutineActivity : AppCompatActivity() {
 
         var userID = ""
 
-
-
         if (intent.hasExtra("nameKey")) {
             userID = intent.getStringExtra("nameKey").toString()
             /* "nameKey"라는 이름의 key에 저장된 값이 있다면

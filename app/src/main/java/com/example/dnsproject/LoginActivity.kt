@@ -1,68 +1,77 @@
 package com.example.dnsproject
 
+import android.annotation.SuppressLint
+import android.content.Context
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
+import android.content.SharedPreferences
 import android.os.Bundle
-import android.widget.Button
-import android.widget.EditText
+import android.util.Log
 import android.widget.Toast
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.database.ValueEventListener
+import androidx.appcompat.app.AppCompatActivity
+import com.example.dnsproject.exeClasses.Exercise
+import com.example.dnsproject.exeClasses.Routine
+import com.example.dnsproject.exeClasses.User
+import com.google.firebase.database.*
+import com.google.gson.Gson
+import kotlinx.android.synthetic.main.activity_login.*
+
 
 class LoginActivity : AppCompatActivity() {
-    private val database by lazy{FirebaseDatabase.getInstance()}
-    private val userRef = database.getReference("user")
+    private val userRef = FirebaseDatabase.getInstance().reference
+    private var flag = false
+//    private var sp=getSharedPreferences("isLogin", Context.MODE_PRIVATE)
+//   val edit : SharedPreferences.Editor=sp.edit()
 
+    @SuppressLint("RestrictedApi")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
 
-        val LoginBut : Button = findViewById(R.id.LoginButton)
-        val SignUpBut : Button = findViewById(R.id.SignUpButton)
-        val IdText : EditText = findViewById(R.id.IdText)
-        val PwText : EditText = findViewById(R.id.PwText)
-
-        LoginBut.setOnClickListener{
-            FirebaseDatabase.getInstance().reference
-                .child("user")
-                .orderByChild("userID").equalTo(IdText.text.toString())
-                .addListenerForSingleValueEvent(object : ValueEventListener {
+        LoginButton.setOnClickListener {
+            userRef.addListenerForSingleValueEvent(object : ValueEventListener {
                     override fun onCancelled(error: DatabaseError) {
 
                     }
 
                     override fun onDataChange(snapshot: DataSnapshot) {
-                        var map = snapshot.children.first().value as Map<String, Any>
-                        if(map["userPW"].toString()==PwText.text.toString())
-                        {
-                            Toast.makeText(this@LoginActivity, "로그인 완료! "+map["userPW"].toString(), Toast.LENGTH_LONG).show()
-                            //로그인 성공
-                            val nextIntent = Intent(this@LoginActivity, MainActivity::class.java)
-                            nextIntent.putExtra("nameKey", IdText.text.toString())
-                            startActivity(nextIntent)
-                        }
-                        else
-                        {
-                            Toast.makeText(this@LoginActivity, "로그인 실패", Toast.LENGTH_LONG).show()
+                        for (i in snapshot.children) {
+                            Log.d("db", i.child("pw").toString())
+                            if (i.child("pw").value == PwText.text.toString() && i.child("id").value == IdText.text.toString()) {
+                                Log.d("db",i.value.toString())
+                                val user = i.value as HashMap<Any, User>
+                                Log.d("db", "맞음 ")
+                                flag = !flag
+                                var userData= Gson().fromJson(i.value.toString(),User::class.java)
+                                Toast.makeText(this@LoginActivity, "로그인 성공", Toast.LENGTH_LONG).show()
+                                if(flag){
+                                    val nextIntent = Intent(this@LoginActivity, MainActivity::class.java)
+                                    nextIntent.putExtra("nameKey", userData)
+                                    startActivity(nextIntent)
+                                }
+                                break
+                            } else {
+                                Toast.makeText(this@LoginActivity, "로그인 실패", Toast.LENGTH_LONG).show()
+                            }
                         }
                     }
-                })
+            })
         }
 
-        SignUpBut.setOnClickListener{
-            var map = mutableMapOf<String, Any>()
-            map["userID"] = IdText.text.toString()
-            map["userPW"] = PwText.text.toString()
-            map["userEXER"] = ""
-            map["userEXERNUM"] = 0
-            userRef.push().setValue(map)
-
-
-            Toast.makeText(this@LoginActivity, "회원가입 완료 아이디 : "+IdText.text.toString(), Toast.LENGTH_LONG).show()
-            IdText.text.clear()
-            PwText.text.clear()
+        SignUpButton.setOnClickListener {
+            if (IdText.text.isNotEmpty() && PwText.text.isNotEmpty()) {
+                val exerciseList = ArrayList<Exercise>()
+                exerciseList.add(Exercise("default", "0kg", "0회"))
+                exerciseList.add(Exercise("default2", "20kg", "20회"))
+                val routineList=ArrayList<Routine>()
+                routineList.add(Routine("첫번째", exerciseList))
+                val user = User( IdText.text.toString(),
+                    PwText.text.toString(),
+                    routineList)
+                userRef.push().setValue(user)
+                IdText.text.clear()
+                PwText.text.clear()
+            }
         }
     }
 }
+
