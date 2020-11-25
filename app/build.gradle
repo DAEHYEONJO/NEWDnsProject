@@ -17,17 +17,42 @@ android {
     }
 
     buildTypes {
+        def defaultEncKey = "\"\""
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            buildConfigField("String", "ENCRYPTION_KEY", getBuildProperty("encryptKey", defaultEncKey))
+        }
+        debug {
+            debuggable true
+            jniDebuggable = true
+            buildConfigField("String", "ENCRYPTION_KEY", getBuildProperty("encryptKey", defaultEncKey))
         }
     }
+    packagingOptions {
+        pickFirst 'lib/arm64-v8a/*'
+        pickFirst 'lib/armeabi-v7a/*'
+    }
+}
+def getBuildProperty(String property, String defaultValue) {
+    def value = project.getProperties().get(property)
+    return value != null ? value : defaultValue
 }
 apply plugin: 'com.android.application'
 apply plugin: 'com.google.gms.google-services'
 
+repositories {
+    flatDir{
+        dirs 'libs'
+    }
+}
+
 dependencies {
     implementation fileTree(dir: "libs", include: ["*.jar"])
+
+    implementation "com.squareup.okhttp3:okhttp:3.11.0"
+    implementation "com.squareup.okhttp3:okhttp-tls:3.11.0"
+    implementation "com.squareup.okio:okio:2.0.0"
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
     implementation 'androidx.core:core-ktx:1.3.2'
     implementation platform('com.google.firebase:firebase-bom:26.1.0')
@@ -41,5 +66,14 @@ dependencies {
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
     implementation 'com.google.code.gson:gson:2.8.5'
+    implementation ("com.googlecode.json-simple:json-simple:1.1.1"){
+        exclude group: "org.hamcrest", module: 'hamcrest-core'
+    }
+    implementation name: 'htwd-engine-debug', ext: 'aar'
+    implementation name: 'server-tts-engine-debug', ext: 'aar'
+    implementation name: 'ssp-engine-debug', ext: 'aar'
+    implementation name: 'tse-engine-debug', ext: 'aar'
+    implementation name: 'speech-engine-debug', ext: 'aar'
+    implementation name: 'twd-engine-debug', ext: 'aar'
 
 }

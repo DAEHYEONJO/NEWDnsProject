@@ -1,0 +1,28 @@
+{
+  "enableHybrid": true,
+  "internalBufferLength": 60,
+  "bufferPollingCycle": 10,
+  "locale": "ko-KR",
+  "triggerWord": "hilg",
+  "embedded": {
+    "sensitivity": 10,
+    "cm": 0.01,
+    "weight": 0,
+    "noiseThreshold": 3000,
+    "enableLocalPcmDump": false,
+    "enableDebug": false,
+    "localPcmDumpPath": "/sdcard"
+  },
+  "server": {
+    "enableHttp2" : true,
+    "serverIp": "gw.thinqai.net",
+    "serverPort": "38443",
+    "appName": "com.lge.deepthinq.test",
+    "deviceId": "konkuk_project_202009_001",
+    "customKey": "ad8a3e54-a878103825f82ee40be5c12c25f96ed0714b0-ebb24795adb79a0f4e4",
+    "enablePcmDump" : false,
+    "engine" : "keyword",
+    "needKwdResult" : true,
+    "userId": "baily_h2_test"
+  }
+}
