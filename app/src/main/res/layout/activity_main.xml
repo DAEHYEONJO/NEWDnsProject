@@ -6,14 +6,69 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <Button
-        android:id="@+id/test"
+    <TextView
+        android:id="@+id/textView4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Hello World!"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginTop="91dp"
+        android:text="헬스 갤러리!"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/RecommButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="143dp"
+        android:layout_marginEnd="75dp"
+        android:layout_marginRight="75dp"
+        android:layout_marginBottom="144dp"
+        android:text="운동 추천"
+        app:layout_constraintBottom_toTopOf="@+id/ScheduleButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView4" />
+
+    <Button
+        android:id="@+id/ScheduleButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="79dp"
+        android:layout_marginRight="79dp"
+        android:text="일정 관리"
+        app:layout_constraintBaseline_toBaselineOf="@+id/TimerButton"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <Button
+        android:id="@+id/RoutineButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="59dp"
+        android:layout_marginRight="59dp"
+        android:text="루틴 관리"
+        app:layout_constraintBaseline_toBaselineOf="@+id/RecommButton"
+        app:layout_constraintEnd_toStartOf="@+id/RecommButton" />
+
+    <Button
+        android:id="@+id/TimerButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="61dp"
+        android:layout_marginRight="61dp"
+        android:layout_marginBottom="236dp"
+        android:text="타이머"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/ScheduleButton" />
+
+    <Button
+        android:id="@+id/ExerciseButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="66dp"
+        android:layout_marginRight="66dp"
+        android:layout_marginBottom="45dp"
+        android:text="운동!"
+        app:layout_constraintBottom_toTopOf="@+id/ScheduleButton"
+        app:layout_constraintEnd_toEndOf="@+id/ScheduleButton" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
