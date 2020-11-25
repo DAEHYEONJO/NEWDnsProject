@@ -33,10 +33,10 @@
 
         <Spinner
             android:id="@+id/exerSpinner"
-            android:layout_marginRight="10dp"
-            android:entries="@array/exercise_entries"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="35dp"
+            android:layout_marginRight="10dp"
+            android:entries="@array/exercise_entries" />
 
         <Spinner
             android:id="@+id/numSpinner"
