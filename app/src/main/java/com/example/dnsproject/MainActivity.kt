@@ -81,6 +81,7 @@ class MainActivity : AppCompatActivity() , AsrManager.UpdateResultListener, Trig
             startActivity(nextIntent)
         }
 
+        checkAsrResult("첫번째 루틴 실행해줘")
 
 
     }
@@ -202,6 +203,7 @@ class MainActivity : AppCompatActivity() , AsrManager.UpdateResultListener, Trig
                     Log.d("TAG","Unable to start. error")
                     stopListening("Unable to start. error = $ret")
                 }
+
             } else {
                 Log.d("TAG","button uncheck")
                 stopListening("버튼 uncheck")
@@ -224,7 +226,6 @@ class MainActivity : AppCompatActivity() , AsrManager.UpdateResultListener, Trig
                     "TAG",
                     "StartButton: START"
                 )
-
                 val sensitivity: String = "10"
                 var isFileMode = false
                 val keywordId: Int = 1 //hilg
@@ -287,28 +288,35 @@ class MainActivity : AppCompatActivity() , AsrManager.UpdateResultListener, Trig
         checkAsrResult(str)
     }
 
-    fun checkAsrResult(str: String?){
+    private fun checkAsrResult(str: String?){
+        var routineNum = 0
         if (str != null && !str.isEmpty()) {
 
             if(str!!.contains("실행", true)||str!!.contains("루틴", true)){
                 if(str!!.contains("첫번째", true)){
                     Toast.makeText(this, "첫번째 성공", Toast.LENGTH_SHORT).show()
                     Log.d("TAG", "첫번째 성공")
-                    //첫번째 루틴 가져와서 실행
+                    routineNum = 0
 
                 }
                 else if(str!!.contains("두번째", true)){
                     Log.d("TAG", "두번째 성공")
                     Toast.makeText(this, "두번째 성공", Toast.LENGTH_SHORT).show()
-                    //2번째 루틴 가져와서 실행
+                    routineNum = 1
 
                 }
-                if(str!!.contains("세번째", true)){
+                else if(str!!.contains("세번째", true)){
                     Log.d("TAG", "세번째 성공")
                     Toast.makeText(this, "세번째 성공", Toast.LENGTH_SHORT).show()
-                    //2번째 루틴 가져와서 실행
+                    routineNum = 2
+                }
+                val intent = Intent(this@MainActivity, ExecuteActivity::class.java)
+
+                intent.apply {
+                    this.putExtra("routine", routineList[routineNum])
                 }
 
+                startActivity(intent)
             }
             else
             {

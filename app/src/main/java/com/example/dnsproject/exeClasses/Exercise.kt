@@ -5,5 +5,6 @@ import java.io.Serializable
 class Exercise (
     var name:String,
     var weight:String,
-    var count:String
+    var count:String,
+    var setCount:String
 ): Serializable
