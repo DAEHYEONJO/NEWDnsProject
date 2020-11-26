@@ -12,6 +12,5 @@ class ExerciseRecordActivity : AppCompatActivity() {
         MyCalendar.setOnDateChangeListener{ MyCalendar, i, i2, i3 ->
             Toast.makeText(this@ExerciseRecordActivity, "Selected Date:$i3/$i2/$i", Toast.LENGTH_LONG).show()
         }
-
     }
 }

@@ -7,41 +7,34 @@ import android.view.ViewGroup
 import android.widget.TextView
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
+import com.example.dnsproject.exeClasses.Routine
 import kotlinx.android.synthetic.main.row_exer.view.*
 
-class ExerAdapter(var mData: ArrayList<Int>?) :
+class ExerAdapter(val mData: ArrayList<Routine>, private val layoutInflater: LayoutInflater) :
     RecyclerView.Adapter<ExerAdapter.ViewHolder>() {
 
     // 아이템 뷰를 저장하는 뷰홀더 클래스.
-    inner class ViewHolder(itemView: View) :
-        RecyclerView.ViewHolder(itemView) {
-
-
+    inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        lateinit var routineName:TextView
         init {
-
-            // 뷰 객체에 대한 참조. (hold strong reference)
-
+            routineName=itemView.findViewById(R.id.routineName)
         }
     }
 
     // onCreateViewHolder() - 아이템 뷰를 위한 뷰홀더 객체 생성하여 리턴.
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val inflater = parent.context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
-        val view: View = inflater.inflate(R.layout.row_exer, parent, false)
+        val view: View = layoutInflater.inflate(R.layout.row_exer, parent, false)
         return ViewHolder(view)
     }
 
     // onBindViewHolder() - position에 해당하는 데이터를 뷰홀더의 아이템뷰에 표시.
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.itemView.exerName.text = "운동"+mData!![position].toString()
-        holder.itemView.setOnClickListener {
-            Toast.makeText(holder.itemView.context, holder.itemView.exerName.text, Toast.LENGTH_SHORT).show()
-        }
+        holder.itemView.routineName.text =mData[position].name
     }
 
     // getItemCount() - 전체 데이터 갯수 리턴.
     override fun getItemCount(): Int {
-        return mData!!.size
+        return mData.size
     }
 
 }

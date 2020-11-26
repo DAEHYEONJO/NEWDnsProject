@@ -61,8 +61,7 @@ class MainActivity : AppCompatActivity() , AsrManager.UpdateResultListener, Trig
             requestPermission
         )
 
-        initEngine()
-        initButtonStart()
+
 
         TimerButton.setOnClickListener {
             val nextIntent = Intent(this@MainActivity, StopWatchActivity::class.java)
@@ -78,14 +77,29 @@ class MainActivity : AppCompatActivity() , AsrManager.UpdateResultListener, Trig
         }
         RoutineButton.setOnClickListener {
             val nextIntent = Intent(this@MainActivity, ManageRoutineActivity::class.java)
-            //nextIntent.putExtra("nameKey", userData)
+            nextIntent.putExtra("nameKey", routineList)
             startActivity(nextIntent)
         }
 
+
+
+    }
+
+
+
+    override fun onResume() {
+        super.onResume()
+        initEngine()
+        initButtonStart()
         /* htwd engine 가동 */
         htwd_button.isChecked = true
         htwd_button.callOnClick()
+    }
 
+    override fun onPause() {
+        super.onPause()
+        stopAndDestroyEngine()
+        stophtwdListening()
     }
 
     private fun initEngine() {
@@ -336,20 +350,12 @@ class MainActivity : AppCompatActivity() , AsrManager.UpdateResultListener, Trig
                     asr_button.isChecked = true
                     asr_button.callOnClick()
                 } else {
-//                    Toast.makeText(
-//                        applicationContext,
-//                        "기동어 검출 실패!",
-//                        Toast.LENGTH_LONG
-//                    ).show()
-                    if (stopped) {
-//                    Toast.makeText(
-//                        applicationContext,
-//                        "기동어 engine stop",
-//                        Toast.LENGTH_LONG
-//                    ).show()
-                        htwd_button.isChecked = false
-                        setEnabledViewsForStart(true)
-                    }
+
+                }
+                if (stopped) {
+
+                    htwd_button.isChecked = false
+                    setEnabledViewsForStart(true)
                 }
             }
         }
@@ -372,11 +378,6 @@ class MainActivity : AppCompatActivity() , AsrManager.UpdateResultListener, Trig
         stophtwdListening()
     }
 
-    override fun onRestart() {
-        super.onRestart()
-        htwd_button.isChecked = true
-        htwd_button.callOnClick()
-    }
 
     //asr 멈추기
     private fun stopAndDestroyEngine() {

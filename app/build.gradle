@@ -66,6 +66,9 @@ dependencies {
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
     implementation 'com.google.code.gson:gson:2.8.5'
+
+    implementation 'com.sothree.slidinguppanel:library:3.4.0'
+
     implementation ("com.googlecode.json-simple:json-simple:1.1.1"){
         exclude group: "org.hamcrest", module: 'hamcrest-core'
     }
@@ -75,5 +78,6 @@ dependencies {
     implementation name: 'tse-engine-debug', ext: 'aar'
     implementation name: 'speech-engine-debug', ext: 'aar'
     implementation name: 'twd-engine-debug', ext: 'aar'
+
 
 }
