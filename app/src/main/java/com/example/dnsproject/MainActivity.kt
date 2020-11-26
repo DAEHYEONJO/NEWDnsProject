@@ -20,7 +20,10 @@ import com.example.dnsproject.model.TwdModelLoader
 import com.google.gson.Gson
 import com.lge.aip.engine.base.AIEngineReturn
 import com.lge.aip.engine.speech.util.MyDevice
+import kotlinx.android.synthetic.main.activity_execute.*
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.activity_main.asr_button
+import kotlinx.android.synthetic.main.activity_main.htwd_button
 import kotlinx.android.synthetic.main.activity_make_routine.*
 import java.io.*
 import java.nio.charset.Charset
@@ -40,12 +43,13 @@ class MainActivity : AppCompatActivity() , AsrManager.UpdateResultListener, Trig
     private var mModelLoader: TwdModelLoader? = null
     private var mTimeFull: Long = 0
     private val mTimeAsr: Long = 0
+    lateinit var key:String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         //아 배고파..
-
+        key = intent.getStringExtra("key").toString()
         if (intent.hasExtra("nameKey")) {
             userData = intent.getSerializableExtra("nameKey") as User
             /* "nameKey"라는 이름의 key에 저장된 값이 있다면
@@ -81,7 +85,8 @@ class MainActivity : AppCompatActivity() , AsrManager.UpdateResultListener, Trig
             startActivity(nextIntent)
         }
 
-        checkAsrResult("첫번째 루틴 실행해줘")
+        checkAsrResult("첫번째 루틴 실행해줘")//임의로 한거
+
 
 
     }
@@ -310,10 +315,12 @@ class MainActivity : AppCompatActivity() , AsrManager.UpdateResultListener, Trig
                     Toast.makeText(this, "세번째 성공", Toast.LENGTH_SHORT).show()
                     routineNum = 2
                 }
+
                 val intent = Intent(this@MainActivity, ExecuteActivity::class.java)
 
                 intent.apply {
                     this.putExtra("routine", routineList[routineNum])
+                    this.putExtra("key", key)
                 }
 
                 startActivity(intent)
@@ -325,6 +332,11 @@ class MainActivity : AppCompatActivity() , AsrManager.UpdateResultListener, Trig
                 htwd_button.isChecked = true
                 htwd_button.callOnClick()
             }
+        }
+        else{
+            /* htwd engine 가동 */
+            htwd_button.isChecked = true
+            htwd_button.callOnClick()
         }
     }
 

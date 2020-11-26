@@ -50,6 +50,7 @@ class LoginActivity : AppCompatActivity() {
                                 if(flag){
                                     val nextIntent = Intent(this@LoginActivity, MainActivity::class.java)
                                     nextIntent.putExtra("nameKey", userData)
+                                    nextIntent.putExtra("key", i.key.toString())
                                     startActivity(nextIntent)
                                 }
                                 break
