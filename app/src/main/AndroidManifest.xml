@@ -28,7 +28,9 @@
         <activity android:name=".ExerciseRecordActivity" />
         <activity android:name=".ManageRoutineActivity" />
         <activity android:name=".StopWatchActivity" />
+
         <activity android:name=".MainActivity" />
+        <activity android:name=".ExecuteActivity" />
     </application>
 
 </manifest>

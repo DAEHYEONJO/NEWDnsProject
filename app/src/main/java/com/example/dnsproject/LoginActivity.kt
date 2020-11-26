@@ -65,6 +65,7 @@ class LoginActivity : AppCompatActivity() {
                 val exerciseList = ArrayList<Exercise>()
                 exerciseList.add(Exercise("벤치프레스", "0kg", "0","2"))
                 exerciseList.add(Exercise("스쿼트", "20kg", "20","3"))
+
                 val routineList=ArrayList<Routine>()
                 routineList.add(Routine("첫번째", exerciseList))
                 val fixExercise=FixExercise()

@@ -23,7 +23,10 @@ import com.example.dnsproject.model.TwdModelLoader
 import com.google.gson.Gson
 import com.lge.aip.engine.base.AIEngineReturn
 import com.lge.aip.engine.speech.util.MyDevice
+import kotlinx.android.synthetic.main.activity_execute.*
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.activity_main.asr_button
+import kotlinx.android.synthetic.main.activity_main.htwd_button
 import kotlinx.android.synthetic.main.activity_make_routine.*
 import kotlinx.android.synthetic.main.activity_manage_routine.*
 import java.io.*
@@ -50,7 +53,6 @@ class MainActivity : AppCompatActivity() , AsrManager.UpdateResultListener, Trig
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         //아 배고파..
-
         if (intent.hasExtra("nameKey")) {
             userData = intent.getSerializableExtra("nameKey") as User
             ikey= intent.getStringExtra("IKEY").toString()
@@ -87,6 +89,7 @@ class MainActivity : AppCompatActivity() , AsrManager.UpdateResultListener, Trig
             nextIntent.putExtra("IKEY",ikey)
             startActivityForResult(nextIntent,2)
         }
+
 
     }
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -216,6 +219,7 @@ class MainActivity : AppCompatActivity() , AsrManager.UpdateResultListener, Trig
                     Log.d("TAG","Unable to start. error")
                     stopListening("Unable to start. error = $ret")
                 }
+
             } else {
                 Log.d("TAG","button uncheck")
                 stopListening("버튼 uncheck")
@@ -238,7 +242,6 @@ class MainActivity : AppCompatActivity() , AsrManager.UpdateResultListener, Trig
                     "TAG",
                     "StartButton: START"
                 )
-
                 val sensitivity: String = "10"
                 var isFileMode = false
                 val keywordId: Int = 1 //hilg
@@ -301,28 +304,37 @@ class MainActivity : AppCompatActivity() , AsrManager.UpdateResultListener, Trig
         checkAsrResult(str)
     }
 
-    fun checkAsrResult(str: String?){
+    private fun checkAsrResult(str: String?){
+        var routineNum = 0
         if (str != null && !str.isEmpty()) {
 
             if(str!!.contains("실행", true)||str!!.contains("루틴", true)){
                 if(str!!.contains("첫번째", true)){
                     Toast.makeText(this, "첫번째 성공", Toast.LENGTH_SHORT).show()
                     Log.d("TAG", "첫번째 성공")
-                    //첫번째 루틴 가져와서 실행
+                    routineNum = 0
 
                 }
                 else if(str!!.contains("두번째", true)){
                     Log.d("TAG", "두번째 성공")
                     Toast.makeText(this, "두번째 성공", Toast.LENGTH_SHORT).show()
-                    //2번째 루틴 가져와서 실행
+                    routineNum = 1
 
                 }
-                if(str!!.contains("세번째", true)){
+                else if(str!!.contains("세번째", true)){
                     Log.d("TAG", "세번째 성공")
                     Toast.makeText(this, "세번째 성공", Toast.LENGTH_SHORT).show()
-                    //2번째 루틴 가져와서 실행
+                    routineNum = 2
                 }
 
+                val intent = Intent(this@MainActivity, ExecuteActivity::class.java)
+
+                intent.apply {
+                    this.putExtra("routine", routineList[routineNum])
+                    this.putExtra("IKEY", ikey)
+                }
+
+                startActivity(intent)
             }
             else
             {
@@ -331,6 +343,11 @@ class MainActivity : AppCompatActivity() , AsrManager.UpdateResultListener, Trig
                 htwd_button.isChecked = true
                 htwd_button.callOnClick()
             }
+        }
+        else{
+            /* htwd engine 가동 */
+            htwd_button.isChecked = true
+            htwd_button.callOnClick()
         }
     }
 
