@@ -438,12 +438,32 @@ class StopWatchActivity : AppCompatActivity() , AsrManager.UpdateResultListener,
                     watch_asr_button.callOnClick()
                 } else {
 
+                }
+                if (stopped) {
                     watch_htwd_button.isChecked = false
                     setEnabledViewsForStart(true)
                 }
             }
         }
     }
+    override fun onDestroy() {
+        super.onDestroy()
+        stopAndDestroyEngine()
+        stophtwdListening()
+    }
+
+    override fun onBackPressed() {
+        super.onBackPressed()
+        stopAndDestroyEngine()
+        stophtwdListening()
+    }
+
+    override fun onStop() {
+        super.onStop()
+        stopAndDestroyEngine()
+        stophtwdListening()
+    }
+
 
 
 }
