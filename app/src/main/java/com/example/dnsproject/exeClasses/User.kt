@@ -5,8 +5,10 @@ import java.io.Serializable
 
 
 @Keep
-class User(var id: String ,
-           var pw: String ,
-           var routine: ArrayList<Routine>):Serializable{
+class User(
+    var id: String,
+    var pw: String,
+    var routine: ArrayList<Routine>,
+    var fixExercise: FixExercise) : Serializable {
 
 }

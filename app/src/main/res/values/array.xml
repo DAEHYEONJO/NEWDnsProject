@@ -1,34 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string-array name="exercise_entries">
-        <item >팔굽혀펴기</item>
-        <item >이두컬</item>
-        <item >삼두컬</item>
-        <item >윗몸일으키기</item>
-        <item >스쿼트</item>
-        <item >크런치</item>
-        <item >플랭크점프</item>
-        <item >버피테스트</item>
-        <item >런지</item>
-        <item >턱걸이</item>
-
-    </string-array>
-
-    <string-array name="num_entries">
-        <item >10</item>
-        <item >20</item>
-        <item >30</item>
-
-    </string-array>
-
-    <string-array name="set_entries">
-        <item >1</item>
-        <item >2</item>
-        <item >3</item>
-        <item >4</item>
-        <item >5</item>
-
-    </string-array>
 
     <string-array name="my_exercise">
     </string-array>

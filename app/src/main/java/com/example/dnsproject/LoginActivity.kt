@@ -8,6 +8,7 @@ import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.dnsproject.exeClasses.Exercise
+import com.example.dnsproject.exeClasses.FixExercise
 import com.example.dnsproject.exeClasses.Routine
 import com.example.dnsproject.exeClasses.User
 import com.google.firebase.database.*
@@ -27,6 +28,7 @@ class LoginActivity : AppCompatActivity() {
         setContentView(R.layout.activity_login)
 
         LoginButton.setOnClickListener {
+            Toast.makeText(this@LoginActivity,"로그인버튼",Toast.LENGTH_SHORT).show()
             flag=false
             userRef.addListenerForSingleValueEvent(object : ValueEventListener {
                     override fun onCancelled(error: DatabaseError) {
@@ -34,10 +36,7 @@ class LoginActivity : AppCompatActivity() {
                     }
 
                     override fun onDataChange(snapshot: DataSnapshot) {
-                        var sncount=snapshot.childrenCount.toInt()
                         for (i in snapshot.children) {
-                            sncount--
-                            Log.d("db",sncount .toString())
                             Log.d("db",i.child("pw").toString())
                             Log.d("db", i.child("id").toString())
                             if (i.child("pw").value == PwText.text.toString() && i.child("id").value == IdText.text.toString()) {
@@ -50,13 +49,13 @@ class LoginActivity : AppCompatActivity() {
                                 if(flag){
                                     val nextIntent = Intent(this@LoginActivity, MainActivity::class.java)
                                     nextIntent.putExtra("nameKey", userData)
+                                    nextIntent.putExtra("IKEY", i.key.toString())
                                     startActivity(nextIntent)
                                 }
                                 break
                             }
                         }
-                        if (sncount==0)
-                            Toast.makeText(this@LoginActivity, "로그인 실패", Toast.LENGTH_LONG).show()
+
                     }
             })
         }
@@ -64,13 +63,15 @@ class LoginActivity : AppCompatActivity() {
         SignUpButton.setOnClickListener {
             if (IdText.text.isNotEmpty() && PwText.text.isNotEmpty()) {
                 val exerciseList = ArrayList<Exercise>()
-                exerciseList.add(Exercise("default", "0kg", "0회"))
-                exerciseList.add(Exercise("default2", "20kg", "20회"))
+                exerciseList.add(Exercise("벤치프레스", "0kg", "0","2"))
+                exerciseList.add(Exercise("스쿼트", "20kg", "20","3"))
                 val routineList=ArrayList<Routine>()
                 routineList.add(Routine("첫번째", exerciseList))
+                val fixExercise=FixExercise()
                 val user = User( IdText.text.toString(),
                     PwText.text.toString(),
-                    routineList)
+                    routineList,
+                    fixExercise)
                 userRef.push().setValue(user)
                 IdText.text.clear()
                 PwText.text.clear()

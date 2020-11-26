@@ -50,4 +50,35 @@
         <item>heycloi</item>
     </string-array>
 
+    <string-array name="exercise_entries">
+        <item >숄더프레스</item>
+        <item >벤치프레스</item>
+        <item >바벨컬</item>
+        <item >데드리프트</item>
+        <item >스쿼트</item>
+    </string-array>
+
+    <string-array name="num_entries">
+        <item >10회</item>
+        <item >20회</item>
+        <item >30회</item>
+
+    </string-array>
+
+    <string-array name="set_entries">
+        <item >1세트</item>
+        <item >2세트</item>
+        <item >3세트</item>
+        <item >4세트</item>
+        <item >5세트</item>
+    </string-array>
+
+    <string-array name="weight_entries">
+        <item >200kg</item>
+        <item >300kg</item>
+        <item >400kg</item>
+        <item >500kg</item>
+        <item >600kg</item>
+    </string-array>
+
 </resources>
