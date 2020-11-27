@@ -51,7 +51,7 @@ class MakeRoutineActivity : AppCompatActivity() {
             curRoutine.add(Routine("default", addedExerciseList))
             /* "nameKey"라는 이름의 key에 저장된 값이 있다면
                textView의 내용을 "nameKey" key에서 꺼내온 값으로 바꾼다 */
-            Toast.makeText(this, curRoutine[0].name, Toast.LENGTH_SHORT).show()
+            //Toast.makeText(this, curRoutine[0].name, Toast.LENGTH_SHORT).show()
         } else {
             Toast.makeText(this, "전달된 이름이 없습니다", Toast.LENGTH_SHORT).show()
         }
@@ -64,6 +64,14 @@ class MakeRoutineActivity : AppCompatActivity() {
         exerSpinner.onItemSelectedListener=object: AdapterView.OnItemSelectedListener{
             override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
                 exeName=p0?.getItemAtPosition(p2) as String
+                when(exeName){
+                    "벤치프레스"->{exeName="benchpress"}
+                    "숄더프레스"->{exeName="shoulderpress"}
+                    "바벨컬"->{exeName="barbellcurls"}
+                    "데드리프트"->{exeName="deadlift"}
+                    "스쿼트"->{exeName="squat"}
+                    else->{exeName="없음"}
+                }
                 Toast.makeText(this@MakeRoutineActivity, exeName, Toast.LENGTH_SHORT).show()
             }
             override fun onNothingSelected(p0: AdapterView<*>?) {

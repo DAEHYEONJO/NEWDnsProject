@@ -16,6 +16,7 @@ import com.example.dnsproject.engine.AsrManager
 import com.example.dnsproject.engine.MicAudioSource
 import com.example.dnsproject.engine.TriggerWordDetectionManager
 import com.example.dnsproject.exeClasses.Exercise
+import com.example.dnsproject.exeClasses.FixExercise
 import com.example.dnsproject.exeClasses.Routine
 import com.example.dnsproject.exeClasses.User
 import com.example.dnsproject.helper.PermissionCheck
@@ -34,12 +35,12 @@ import java.nio.charset.Charset
 import java.nio.charset.StandardCharsets
 
 class MainActivity : AppCompatActivity() , AsrManager.UpdateResultListener, TriggerWordDetectionManager.UpdateResultListener{
-    //private val filePath="/sdcard/dnsTTS/10_seconds.pcm"
     private val requestPermission=arrayOf(android.Manifest.permission.READ_EXTERNAL_STORAGE,
         android.Manifest.permission.WRITE_EXTERNAL_STORAGE, android.Manifest.permission.RECORD_AUDIO)
     private lateinit var userData: User
     private lateinit var routineList:ArrayList<Routine>
     private lateinit var ikey:String
+    private lateinit var fixExercise: FixExercise
     /* engine */
     private var mEngineManager: AsrManager? = null
     private var mConfig: SpeechConfig? = null
@@ -56,10 +57,10 @@ class MainActivity : AppCompatActivity() , AsrManager.UpdateResultListener, Trig
         if (intent.hasExtra("nameKey")) {
             userData = intent.getSerializableExtra("nameKey") as User
             ikey= intent.getStringExtra("IKEY").toString()
-            /* "nameKey"라는 이름의 key에 저장된 값이 있다면
-               textView의 내용을 "nameKey" key에서 꺼내온 값으로 바꾼다 --????????????*/
+            fixExercise=userData.fixExercise
+            Log.d("db",fixExercise.barbellCurlsCount.toString())
             routineList =userData.routine
-            Log.d("db","rlist : "+routineList[0].name)
+//            Log.d("db","rlist : "+routineList[0].name)
 
         } else {
             Toast.makeText(this, "전달된 이름이 없습니다", Toast.LENGTH_SHORT).show()
@@ -300,6 +301,7 @@ class MainActivity : AppCompatActivity() , AsrManager.UpdateResultListener, Trig
             asr_button.isChecked = false
             asr_button.callOnClick()
             setEnabledViewsForStart(true)
+            //result_asr.text=str
         }
         checkAsrResult(str)
     }
@@ -308,7 +310,7 @@ class MainActivity : AppCompatActivity() , AsrManager.UpdateResultListener, Trig
         var routineNum = 0
         if (str != null && !str.isEmpty()) {
 
-            if(str!!.contains("실행", true)||str!!.contains("루틴", true)){
+            if(str!!.contains("실행", true)||str!!.contains("루틴", true)||str!!.contains("루팅",true)){
                 if(str!!.contains("첫번째", true)){
                     Toast.makeText(this, "첫번째 성공", Toast.LENGTH_SHORT).show()
                     Log.d("TAG", "첫번째 성공")
@@ -330,16 +332,17 @@ class MainActivity : AppCompatActivity() , AsrManager.UpdateResultListener, Trig
                 val intent = Intent(this@MainActivity, ExecuteActivity::class.java)
 
                 intent.apply {
+                    this.putExtra("fixExercise",fixExercise)
                     this.putExtra("routine", routineList[routineNum])
                     this.putExtra("IKEY", ikey)
                 }
-
                 startActivity(intent)
             }
             else
             {
                 Toast.makeText(this, "루틴 가져오기 실패", Toast.LENGTH_SHORT).show()
                 //htwd engine 다시 실행해야함
+                Log.d("TAG",str)
                 htwd_button.isChecked = true
                 htwd_button.callOnClick()
             }

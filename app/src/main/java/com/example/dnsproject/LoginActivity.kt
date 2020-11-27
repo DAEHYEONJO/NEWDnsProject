@@ -63,8 +63,8 @@ class LoginActivity : AppCompatActivity() {
         SignUpButton.setOnClickListener {
             if (IdText.text.isNotEmpty() && PwText.text.isNotEmpty()) {
                 val exerciseList = ArrayList<Exercise>()
-                exerciseList.add(Exercise("벤치프레스", "0kg", "0","2"))
-                exerciseList.add(Exercise("스쿼트", "20kg", "20","3"))
+                exerciseList.add(Exercise("benchpress", "0kg", "15","2"))
+                exerciseList.add(Exercise("squat", "20kg", "20","3"))
 
                 val routineList=ArrayList<Routine>()
                 routineList.add(Routine("첫번째", exerciseList))

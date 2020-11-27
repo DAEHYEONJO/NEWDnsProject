@@ -33,9 +33,7 @@ class ManageRoutineActivity : AppCompatActivity() {
         if (intent.hasExtra("nameKey")) {
             curRoutine = intent.getSerializableExtra("nameKey") as ArrayList<Routine>
             ikey= intent.getStringExtra("IKEY").toString()
-            Toast.makeText(this, curRoutine[0].name, Toast.LENGTH_SHORT).show()
-            /* "nameKey"라는 이름의 key에 저장된 값이 있다면
-               textView의 내용을 "nameKey" key에서 꺼내온 값으로 바꾼다 */
+            //Toast.makeText(this, curRoutine[0].name, Toast.LENGTH_SHORT).show()
 
         } else {
             Toast.makeText(this, "전달된 이름이 없습니다", Toast.LENGTH_SHORT).show()

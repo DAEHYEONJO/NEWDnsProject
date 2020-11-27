@@ -1,5 +1,6 @@
 package com.example.dnsproject
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import android.os.CountDownTimer
@@ -13,9 +14,11 @@ import com.example.dnsproject.engine.AsrManager
 import com.example.dnsproject.engine.MicAudioSource
 import com.example.dnsproject.engine.TriggerWordDetectionManager
 import com.example.dnsproject.exeClasses.Exercise
+import com.example.dnsproject.exeClasses.FixExercise
 import com.example.dnsproject.exeClasses.Routine
 import com.example.dnsproject.exeClasses.User
 import com.example.dnsproject.model.TwdModelLoader
+import com.example.dnsproject.tts.TTSManager
 import com.google.firebase.database.*
 import com.google.firebase.ktx.Firebase
 import com.google.gson.Gson
@@ -37,9 +40,16 @@ class ExecuteActivity : AppCompatActivity() , AsrManager.UpdateResultListener, T
     val COUNTTIME : Long = 500 //운동 count시간 0.5초로 해둠
     lateinit var mRoutine:Routine
     lateinit var routineArray: ArrayList<Exercise>
+    lateinit var fixExercise: FixExercise
     private lateinit var myTimer : MyTimer
     private var routineSize:Int = 3
     var rNum : Int = 0
+
+    /* tts & pcm file path */
+    private val tenSecPcm="/sdcard/dnsTTS/10seconds.pcm"
+    private val defaultPcmPath="/sdcard/dnsTTS/"
+    private val restStartPcm="/sdcard/dnsTTS/rest_start.pcm"
+    private val ttsManager=TTSManager()
 
     /* engine */
     private var mEngineManager: AsrManager? = null
@@ -54,25 +64,26 @@ class ExecuteActivity : AppCompatActivity() , AsrManager.UpdateResultListener, T
     private lateinit var database: DatabaseReference
     private lateinit var key:String
 
-
     var restFlag : Boolean by Delegates.observable(true, { _, old, new ->
         if(rNum>=routineSize){
             //routine 끝!
             finishRoutine(true)
-
         }
         else{
             if(restFlag){ // 휴식타이머
                 rNum--
                 //tts 휴식 시작합니다
+                ttsManager.playPcmForFileModeStart(restStartPcm)
                 current_action.text = "휴식^^"
-                myTimer = MyTimer(3000, 1000)
+                myTimer = MyTimer(20000, 1000)
                 myTimer.start()
             }
             else{
                 current_action.text = routineArray[rNum].name
                 Log.d("FFINDD", "start $rNum action 운동")
                 //tts routineArray[rNum].name운동 시작합니다
+                val exePath=defaultPcmPath+routineArray[rNum].name+"_start.pcm"
+                ttsManager.playPcmForFileModeStart(exePath)
                 val futureTime = routineArray[rNum].count.toLong()*COUNTTIME
                 myTimer = MyTimer(futureTime, COUNTTIME)
                 myTimer.start()
@@ -86,8 +97,8 @@ class ExecuteActivity : AppCompatActivity() , AsrManager.UpdateResultListener, T
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_execute)
         mRoutine = intent.getSerializableExtra("routine") as Routine
-        key = intent.getStringExtra("key").toString()
-        //Toast.makeText(this,mRoutine.name, Toast.LENGTH_SHORT).show()
+        key = intent.getStringExtra("IKEY").toString()
+        fixExercise = intent.getSerializableExtra("fixExercise") as FixExercise
         routineArray = ArrayList()
         for(i in 0 until mRoutine.exerciseList.size)
         {
@@ -97,7 +108,6 @@ class ExecuteActivity : AppCompatActivity() , AsrManager.UpdateResultListener, T
         }
         routineSize = routineArray.size
         restFlag = false // 루틴시작
-
     }
 
     private fun finishRoutine(end:Boolean){
@@ -109,7 +119,8 @@ class ExecuteActivity : AppCompatActivity() , AsrManager.UpdateResultListener, T
         myTimer.cancel()
         stopAndDestroyEngine()
         stophtwdListening()
-        var exerciseArray = Array<shortExercise>(5)
+        var curFixExercise = FixExercise()
+        var exerciseArray = Array(5)
         { shortExercise("바벨컬",0); shortExercise("벤치프레스",0);shortExercise("데드리프트",0);
             shortExercise("숄더프레스",0); shortExercise("스쿼트",0)}
 
@@ -121,11 +132,6 @@ class ExecuteActivity : AppCompatActivity() , AsrManager.UpdateResultListener, T
                 }
             }
         }
-
-
-
-
-
     }
     class shortExercise(val name: String, var count:Int){
 
@@ -136,23 +142,33 @@ class ExecuteActivity : AppCompatActivity() , AsrManager.UpdateResultListener, T
         countDownInterval: Long
     ) :
         CountDownTimer(millisInFuture, countDownInterval) {
+
+        @SuppressLint("SetTextI18n")
         override fun onTick(millisUntilFinished: Long) {
+
+            Log.d("timer", " millisUntilFinished : "+millisUntilFinished.toString())
             if(restFlag)//휴식 타이머 일때
             {
-                if(millisUntilFinished.equals(10000)){
+                Log.d("timer", " 휴식타이머 : ")
+                if(millisUntilFinished.toInt() in 10000..10999){
                     //tts 10초 남았습니다.
+                    Log.d("timer", " 10초남았을때 : "+millisUntilFinished.toString())
+                        Toast.makeText(this@ExecuteActivity,"10초남음",Toast.LENGTH_SHORT).show()
+                    ttsManager.playPcmForFileModeStart(tenSecPcm)
                 }
                 remain_time.text = (millisUntilFinished / 1000.toLong()).toString() + " 초"
             }
             else{//운동 타이머
-                remain_time.text = (millisUntilFinished / COUNTTIME.toLong()).toString() + " 세트"
+                remain_time.text = (millisUntilFinished / COUNTTIME.toLong()).toString() + " 개"
             }
 
         }
 
         override fun onFinish() {
+            Log.d("timer","onfinish timer")
             remain_time.text = "finish"
             rNum += 1
+            Log.d("timer",rNum.toString())
             restFlag = !restFlag
         }
 
