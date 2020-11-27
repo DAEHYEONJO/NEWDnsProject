@@ -144,6 +144,10 @@ class ExecuteActivity : AppCompatActivity() , AsrManager.UpdateResultListener, T
         val toDBFixExercise: MutableMap<String, FixExercise> = HashMap()
         toDBFixExercise["fixExercise"]=curFixExercise
         databaseReference.updateChildren(toDBFixExercise as Map<String, FixExercise>)
+
+        /*val toMainIntent=Intent(this,MainActivity::class.java)
+        toMainIntent.putExtra("fixExercise",curFixExercise)
+        setResult(110,toMainIntent)*/
     }
     class shortExercise(val name: String, var count:Int){
 
@@ -168,16 +172,16 @@ class ExecuteActivity : AppCompatActivity() , AsrManager.UpdateResultListener, T
                         Toast.makeText(this@ExecuteActivity,"10초남음",Toast.LENGTH_SHORT).show()
                     ttsManager.playPcmForFileModeStart(tenSecPcm)
                 }
-                runOnUiThread {remain_time.text = (millisUntilFinished / 1000.toLong()).toString() + " 초"}
+                remain_time.text = (millisUntilFinished / 1000.toLong()).toString() + " 초"
             }
             else{//운동 타이머
-                runOnUiThread{remain_time.text = (millisUntilFinished / COUNTTIME.toLong()).toString() + " 개"}
+                remain_time.text = (millisUntilFinished / COUNTTIME.toLong()).toString() + " 개"
             }
         }
 
         override fun onFinish() {
             Log.d("timer","onfinish timer")
-            runOnUiThread { remain_time.text = "finish" }
+            remain_time.text = "finish"
             rNum += 1
             Log.d("timer",rNum.toString())
             restFlag = !restFlag

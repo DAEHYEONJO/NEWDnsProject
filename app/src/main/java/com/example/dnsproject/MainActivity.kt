@@ -83,6 +83,7 @@ class MainActivity : AppCompatActivity() , AsrManager.UpdateResultListener, Trig
         }
         RecommButton.setOnClickListener {
             val nextIntent = Intent(this@MainActivity, RecommendExerciseActivity::class.java)
+            nextIntent.putExtra("fixExercise", fixExercise)
             startActivity(nextIntent)
         }
         RoutineButton.setOnClickListener {
@@ -96,12 +97,16 @@ class MainActivity : AppCompatActivity() , AsrManager.UpdateResultListener, Trig
     }
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if(resultCode==0){
-            if(data!=null){
-                routineList= data.getSerializableExtra("addRoutine") as ArrayList<Routine>
-                Log.d("db",routineList.size.toString())
-            }else{
-                Log.d("db","null data")
+        if(data!=null){
+            when(resultCode){
+                0->{
+                    routineList= data.getSerializableExtra("addRoutine") as ArrayList<Routine>
+                    Log.d("db",routineList.size.toString())
+                    Log.d("db","null data")
+                }
+                110->{
+                    fixExercise=data.getSerializableExtra("fixExercise") as FixExercise
+                }
             }
         }
     }
