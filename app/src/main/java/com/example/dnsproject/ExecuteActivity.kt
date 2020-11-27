@@ -2,13 +2,11 @@ package com.example.dnsproject
 
 import android.annotation.SuppressLint
 import android.content.Intent
-import android.os.Bundle
-import android.os.CountDownTimer
-import android.os.Handler
-import android.os.Looper
+import android.os.*
 import android.util.Log
 import android.view.View
 import android.widget.Toast
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import com.example.dnsproject.config.*
 import com.example.dnsproject.config.HTWDConfigLoader
@@ -31,6 +29,7 @@ import kotlinx.android.synthetic.main.activity_login.*
 import java.io.*
 import java.nio.charset.Charset
 import java.nio.charset.StandardCharsets
+import java.time.LocalDate
 import kotlin.collections.ArrayList
 import kotlin.properties.Delegates
 
@@ -46,6 +45,7 @@ class ExecuteActivity : AppCompatActivity() , AsrManager.UpdateResultListener, T
     private lateinit var myTimer : MyTimer
     private var routineSize:Int = 3
     var rNum : Int = 0
+
 
     /* tts & pcm file path */
     private val tenSecPcm="/sdcard/dnsTTS/10seconds.pcm"
@@ -66,6 +66,9 @@ class ExecuteActivity : AppCompatActivity() , AsrManager.UpdateResultListener, T
     private lateinit var database: DatabaseReference
     private lateinit var key:String
 
+    @SuppressLint("NewApi")
+    @RequiresApi(Build.VERSION_CODES.O)
+    public val onlyDate: LocalDate = LocalDate.now()
     var restFlag : Boolean by Delegates.observable(true, { _, old, new ->
         if(rNum>=routineSize){
             //routine 끝!
@@ -159,6 +162,86 @@ class ExecuteActivity : AppCompatActivity() , AsrManager.UpdateResultListener, T
         val databaseReference=FirebaseDatabase.getInstance().reference.child(key)
         val toDBFixExercise: MutableMap<String, FixExercise> = HashMap()
         toDBFixExercise["fixExercise"]=curFixExercise
+//윤성 작업
+        val todayExer : MutableMap<String, String> = HashMap()
+
+        //하드코딩 ㅈㅅ
+        var exerSetCount =arrayOf(0,0,0,0,0)
+        var exerCount =arrayOf(0,0,0,0,0)
+        for(i in 0 until routineArray.size)
+        {
+
+            //<<<<<<< bye
+            if(routineArray[i].name=="benchpress")
+            {
+                //idx=0
+                exerSetCount[0]++
+                exerCount[0] = exerCount[0]+routineArray[i].count.toString().toInt()
+            }
+            else if(routineArray[i].name=="shoulderpress")
+            {
+                //idx=1
+                exerSetCount[1]++
+                exerCount[1] = exerCount[1]+routineArray[i].count.toString().toInt()
+            }
+            else if(routineArray[i].name=="barbellcurls")
+            {
+                //idx=2
+                exerSetCount[2]++
+                exerCount[2] = exerCount[2]+routineArray[i].count.toString().toInt()
+            }
+            else if(routineArray[i].name=="deadlift")
+            {
+                //idx=3
+                exerSetCount[3]++
+                exerCount[3] = exerCount[3]+routineArray[i].count.toString().toInt()
+            }
+            else if(routineArray[i].name=="squat")
+            {
+                //idx=4
+                exerSetCount[4]++
+                exerCount[4] = exerCount[4]+routineArray[i].count.toString().toInt()
+            }
+
+        }
+
+        //파베 가져오기
+
+        var ref = databaseReference.child("exerDate").child(onlyDate.toString())
+
+        ref.child("benchpress").setValue(0)
+        ref.child("shoulderpress").setValue(0)
+        ref.child("barbellcurls").setValue(0)
+        ref.child("deadlift").setValue(0)
+        ref.child("squat").setValue(0)
+
+        ref.addListenerForSingleValueEvent(object : ValueEventListener
+        {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                Log.d("윤성테스트", snapshot.value.toString())
+                if(snapshot.value.toString()!=null)
+                {
+                    var ref3 = databaseReference.child("exerDate").child(onlyDate.toString()).child("benchpress")
+                    ref3.setValue((exerSetCount[0]).toString())
+                    var ref4 = databaseReference.child("exerDate").child(onlyDate.toString()).child("shoulderpress")
+                    ref4.setValue((exerSetCount[1]).toString())
+                    var ref5 = databaseReference.child("exerDate").child(onlyDate.toString()).child("barbellcurls")
+                    ref5.setValue((exerSetCount[2]).toString())
+                    var ref6 = databaseReference.child("exerDate").child(onlyDate.toString()).child("deadlift")
+                    ref6.setValue((exerSetCount[3]).toString())
+                    var ref7 = databaseReference.child("exerDate").child(onlyDate.toString()).child("squat")
+                    ref7.setValue((exerSetCount[4]).toString())
+                }
+                else
+                {
+                    //오늘은 처음 저장
+                }
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+            }
+        })
+        //윤성 작업 끝
         databaseReference.updateChildren(toDBFixExercise as Map<String, FixExercise>)
 
         val toMainIntent=Intent()
