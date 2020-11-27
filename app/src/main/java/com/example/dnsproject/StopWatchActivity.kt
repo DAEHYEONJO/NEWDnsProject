@@ -11,6 +11,7 @@ import com.example.dnsproject.engine.AsrManager
 import com.example.dnsproject.engine.MicAudioSource
 import com.example.dnsproject.engine.TriggerWordDetectionManager
 import com.example.dnsproject.model.TwdModelLoader
+import com.google.firebase.BuildConfig
 import com.google.gson.Gson
 import com.lge.aip.engine.base.AIEngineReturn
 import com.lge.aip.engine.speech.util.MyDevice
