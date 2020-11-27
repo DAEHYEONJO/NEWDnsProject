@@ -4,6 +4,8 @@ import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import android.os.CountDownTimer
+import android.os.Handler
+import android.os.Looper
 import android.util.Log
 import android.view.View
 import android.widget.Toast
@@ -73,19 +75,32 @@ class ExecuteActivity : AppCompatActivity() , AsrManager.UpdateResultListener, T
             if(restFlag){ // 휴식타이머
                 rNum--
                 ttsManager.playPcmForFileModeStart(restStartPcm)
-                current_action.text = "휴식^^"
+                runOnUiThread{current_action.text = "휴식^^"}
                 myTimer = MyTimer(200, 1000)
-                myTimer.start()
+                //myTimer.start()
+                val handler= Handler(Looper.getMainLooper())
+                handler.postDelayed(object :Runnable{
+                    override fun run() {
+                        myTimer.start()
+                    }
+                },0)
+
             }
             else{
-                current_action.text = routineArray[rNum].name
+                runOnUiThread{current_action.text = routineArray[rNum].name}
                 Log.d("FFINDD", "start $rNum action 운동")
                 val exePath=defaultPcmPath+routineArray[rNum].name+"_start.pcm"
                 ttsManager.playPcmForFileModeStart(exePath)
                 val futureTime = routineArray[rNum].count.toLong()*COUNTTIME
                 //mytimer.start()
                 myTimer = MyTimer(futureTime, COUNTTIME)
-                myTimer.start()
+                //myTimer.start()
+                val handler= Handler(Looper.getMainLooper())
+                handler.postDelayed(object :Runnable{
+                    override fun run() {
+                        myTimer.start()
+                    }
+                },0)
             }
         }
 
@@ -159,8 +174,7 @@ class ExecuteActivity : AppCompatActivity() , AsrManager.UpdateResultListener, T
     inner class MyTimer(
         millisInFuture: Long,
         countDownInterval: Long
-    ) :
-        CountDownTimer(millisInFuture, countDownInterval) {
+    ) : CountDownTimer(millisInFuture, countDownInterval) {
 
         @SuppressLint("SetTextI18n")
         override fun onTick(millisUntilFinished: Long) {
@@ -175,10 +189,10 @@ class ExecuteActivity : AppCompatActivity() , AsrManager.UpdateResultListener, T
                         Toast.makeText(this@ExecuteActivity,"10초남음",Toast.LENGTH_SHORT).show()
                     ttsManager.playPcmForFileModeStart(tenSecPcm)
                 }
-                remain_time.text = (millisUntilFinished / 1000.toLong()).toString() + " 초"
+                runOnUiThread{remain_time.text = (millisUntilFinished / 1000.toLong()).toString() + " 초"}
             }
             else{//운동 타이머
-                remain_time.text = (millisUntilFinished / COUNTTIME.toLong()).toString() + " 개"
+                runOnUiThread{remain_time.text = (millisUntilFinished / COUNTTIME.toLong()).toString() + " 개"}
             }
         }
 
@@ -193,6 +207,7 @@ class ExecuteActivity : AppCompatActivity() , AsrManager.UpdateResultListener, T
     }
 
     override fun onResume() {
+        Log.d("TAG","ONRESUME 온리쥼")
         super.onResume()
         initEngine()
         initButtonStart()
