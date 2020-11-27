@@ -109,6 +109,7 @@ class MakeRoutineActivity : AppCompatActivity() {
 
             }
         }
+
         weightSpinner.adapter=ArrayAdapter<String>(
             this, R.layout.simple_spinner_dropdown_item, resources.getStringArray(
                 array.weight_entries
@@ -144,7 +145,7 @@ class MakeRoutineActivity : AppCompatActivity() {
             )
             savedExerlistView.adapter = adapter        // 내 리사이클러뷰랑 어뎁터 연결고리
             
-            if(addedExerciseList.size<5){
+            if(addedExerciseList.size<=5){
                 curRoutine[curRoutine.size - 1].exerciseList=addedExerciseList
                 curRoutine[curRoutine.size - 1].name=getRoutineName(curRoutine.size - 1)
                 Log.d("db", curRoutine[curRoutine.size - 1].name.toString())

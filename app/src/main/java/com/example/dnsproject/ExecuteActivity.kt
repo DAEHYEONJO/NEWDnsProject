@@ -37,7 +37,7 @@ import kotlin.properties.Delegates
     routine을 실행하는 Activity
  */
 class ExecuteActivity : AppCompatActivity() , AsrManager.UpdateResultListener, TriggerWordDetectionManager.UpdateResultListener {
-    val COUNTTIME : Long = 500 //운동 count시간 0.5초로 해둠
+    val COUNTTIME : Long = 50 //운동 count시간 0.5초로 해둠->0.5로바꿈
     lateinit var mRoutine:Routine
     lateinit var routineArray: ArrayList<Exercise>
     lateinit var fixExercise: FixExercise
@@ -72,16 +72,14 @@ class ExecuteActivity : AppCompatActivity() , AsrManager.UpdateResultListener, T
         else{
             if(restFlag){ // 휴식타이머
                 rNum--
-                //tts 휴식 시작합니다
                 ttsManager.playPcmForFileModeStart(restStartPcm)
                 current_action.text = "휴식^^"
-                myTimer = MyTimer(20000, 1000)
+                myTimer = MyTimer(200, 1000)
                 myTimer.start()
             }
             else{
                 current_action.text = routineArray[rNum].name
                 Log.d("FFINDD", "start $rNum action 운동")
-                //tts routineArray[rNum].name운동 시작합니다
                 val exePath=defaultPcmPath+routineArray[rNum].name+"_start.pcm"
                 ttsManager.playPcmForFileModeStart(exePath)
                 val futureTime = routineArray[rNum].count.toLong()*COUNTTIME
@@ -116,22 +114,34 @@ class ExecuteActivity : AppCompatActivity() , AsrManager.UpdateResultListener, T
         //그리고 창으로 띄워서 보여줘야함
         //그 뒤에는 메인으로 돌아가야함
         //end true:끝까지 실행 false 중간에 멈춤
+        Log.d("routine","finishiRoutine db저장할곳")
         myTimer.cancel()
         stopAndDestroyEngine()
         stophtwdListening()
         var curFixExercise = FixExercise()
         var exerciseArray = Array(5)
-        { shortExercise("바벨컬",0); shortExercise("벤치프레스",0);shortExercise("데드리프트",0);
-            shortExercise("숄더프레스",0); shortExercise("스쿼트",0)}
+
+        { shortExercise("barbellcurls",0); shortExercise("benchpress",0);shortExercise("deadlift",0);
+            shortExercise("shoulderpress",0); shortExercise("squat",0)}
 
         for(i in 0 until rNum-1){
+            Log.d("routine name",routineArray[i].name+"/"+routineArray[i].count)
             for(element in exerciseArray){
+                Log.d("element name",element.name)
                 if(element.name == routineArray[i].name){
                     element.count += routineArray[i].count.toInt()
-                    break
+                    Log.d("routine name",element.name.toString())
+                    Log.d("routine count",element.count.toString())
                 }
             }
         }
+        for(i in exerciseArray.indices)
+            curFixExercise.setExerciseCount(exerciseArray[i].name,exerciseArray[i].count)
+        Log.d("routine","finishiRoutine db저장할곳2")
+        val databaseReference=FirebaseDatabase.getInstance().reference.child(key)
+        val toDBFixExercise: MutableMap<String, FixExercise> = HashMap()
+        toDBFixExercise["fixExercise"]=curFixExercise
+        databaseReference.updateChildren(toDBFixExercise as Map<String, FixExercise>)
     }
     class shortExercise(val name: String, var count:Int){
 
@@ -161,7 +171,6 @@ class ExecuteActivity : AppCompatActivity() , AsrManager.UpdateResultListener, T
             else{//운동 타이머
                 remain_time.text = (millisUntilFinished / COUNTTIME.toLong()).toString() + " 개"
             }
-
         }
 
         override fun onFinish() {
