@@ -17,6 +17,7 @@ import com.example.dnsproject.exeClasses.Routine
 import com.example.dnsproject.exeClasses.User
 import com.example.dnsproject.helper.PermissionCheck
 import com.example.dnsproject.model.TwdModelLoader
+import com.google.firebase.BuildConfig
 import com.google.gson.Gson
 import com.lge.aip.engine.base.AIEngineReturn
 import com.lge.aip.engine.speech.util.MyDevice
