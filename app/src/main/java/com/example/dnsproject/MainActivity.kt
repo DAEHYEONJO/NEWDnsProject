@@ -79,11 +79,12 @@ class MainActivity : AppCompatActivity() , AsrManager.UpdateResultListener, Trig
         }
         ScheduleButton.setOnClickListener {
             val nextIntent = Intent(this@MainActivity, ExerciseRecordActivity::class.java)
+            nextIntent.putExtra("IKEY", ikey)
             startActivity(nextIntent)
         }
         RecommButton.setOnClickListener {
             val nextIntent = Intent(this@MainActivity, RecommendExerciseActivity::class.java)
-            nextIntent.putExtra("fixExercise", fixExercise)
+            nextIntent.putExtra("IKEY", ikey)
             startActivity(nextIntent)
         }
         RoutineButton.setOnClickListener {

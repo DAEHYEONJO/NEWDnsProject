@@ -1,12 +1,15 @@
 package com.example.dnsproject
 
 import android.annotation.SuppressLint
+import android.content.Context
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import android.os.CountDownTimer
 import android.util.Log
 import android.view.View
 import android.widget.Toast
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import com.example.dnsproject.config.*
 import com.example.dnsproject.config.HTWDConfigLoader
@@ -29,6 +32,7 @@ import kotlinx.android.synthetic.main.activity_login.*
 import java.io.*
 import java.nio.charset.Charset
 import java.nio.charset.StandardCharsets
+import java.time.LocalDate
 import kotlin.collections.ArrayList
 import kotlin.properties.Delegates
 
@@ -59,7 +63,12 @@ class ExecuteActivity : AppCompatActivity() , AsrManager.UpdateResultListener, T
     private var mModelLoader: TwdModelLoader? = null
     private var mTimeFull: Long = 0
     private val mTimeAsr: Long = 0
-    
+
+    /* time */
+    @SuppressLint("NewApi")
+    @RequiresApi(Build.VERSION_CODES.O)
+    public val onlyDate: LocalDate = LocalDate.now()
+
     /* database */
     private lateinit var database: DatabaseReference
     private lateinit var key:String
@@ -92,6 +101,7 @@ class ExecuteActivity : AppCompatActivity() , AsrManager.UpdateResultListener, T
     })
 
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_execute)
@@ -99,6 +109,8 @@ class ExecuteActivity : AppCompatActivity() , AsrManager.UpdateResultListener, T
         key = intent.getStringExtra("IKEY").toString()
         fixExercise = intent.getSerializableExtra("fixExercise") as FixExercise
         routineArray = ArrayList()
+
+
         for(i in 0 until mRoutine.exerciseList.size)
         {
             for(j in 0 until mRoutine.exerciseList[i].setCount.toInt()){
@@ -108,6 +120,7 @@ class ExecuteActivity : AppCompatActivity() , AsrManager.UpdateResultListener, T
         routineSize = routineArray.size
         restFlag = false // 루틴시작
     }
+
 
     private fun finishRoutine(end:Boolean){
         //엔진과 timer 멈춰야함
@@ -144,7 +157,86 @@ class ExecuteActivity : AppCompatActivity() , AsrManager.UpdateResultListener, T
         val toDBFixExercise: MutableMap<String, FixExercise> = HashMap()
         toDBFixExercise["fixExercise"]=curFixExercise
         databaseReference.updateChildren(toDBFixExercise as Map<String, FixExercise>)
+        //윤성 작업
+        val todayExer : MutableMap<String, String> = HashMap()
 
+        //하드코딩 ㅈㅅ
+        var exerSetCount =arrayOf(0,0,0,0,0)
+        var exerCount =arrayOf(0,0,0,0,0)
+        for(i in 0 until routineArray.size)
+        {
+
+            if(routineArray[i].name=="benchpress")
+            {
+                //idx=0
+                exerSetCount[0]++
+                exerCount[0] = exerCount[0]+routineArray[i].count.toString().toInt()
+            }
+            else if(routineArray[i].name=="shoulderpress")
+            {
+                //idx=1
+                exerSetCount[1]++
+                exerCount[1] = exerCount[1]+routineArray[i].count.toString().toInt()
+            }
+            else if(routineArray[i].name=="barbellcurls")
+            {
+                //idx=2
+                exerSetCount[2]++
+                exerCount[2] = exerCount[2]+routineArray[i].count.toString().toInt()
+            }
+            else if(routineArray[i].name=="deadlift")
+            {
+                //idx=3
+                exerSetCount[3]++
+                exerCount[3] = exerCount[3]+routineArray[i].count.toString().toInt()
+            }
+            else if(routineArray[i].name=="squat")
+            {
+                //idx=4
+                exerSetCount[4]++
+                exerCount[4] = exerCount[4]+routineArray[i].count.toString().toInt()
+            }
+
+        }
+
+        //파베 가져오기
+
+        var ref = databaseReference.child("exerDate").child(onlyDate.toString())
+
+        ref.child("benchpress").setValue(0)
+        ref.child("shoulderpress").setValue(0)
+        ref.child("barbellcurls").setValue(0)
+        ref.child("deadlift").setValue(0)
+        ref.child("squat").setValue(0)
+
+        ref.addListenerForSingleValueEvent(object : ValueEventListener
+        {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                Log.d("윤성테스트", snapshot.value.toString())
+                if(snapshot.value.toString()!=null)
+                {
+                    var ref3 = databaseReference.child("exerDate").child(onlyDate.toString()).child("benchpress")
+                    ref3.setValue((exerSetCount[0]).toString())
+                    var ref4 = databaseReference.child("exerDate").child(onlyDate.toString()).child("shoulderpress")
+                    ref4.setValue((exerSetCount[1]).toString())
+                    var ref5 = databaseReference.child("exerDate").child(onlyDate.toString()).child("barbellcurls")
+                    ref5.setValue((exerSetCount[2]).toString())
+                    var ref6 = databaseReference.child("exerDate").child(onlyDate.toString()).child("deadlift")
+                    ref6.setValue((exerSetCount[3]).toString())
+                    var ref7 = databaseReference.child("exerDate").child(onlyDate.toString()).child("squat")
+                    ref7.setValue((exerSetCount[4]).toString())
+                }
+                else
+                {
+                    //오늘은 처음 저장
+                }
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+            }
+        })
+
+        //윤성 작업 끝
         /*val toMainIntent=Intent(this,MainActivity::class.java)
         toMainIntent.putExtra("fixExercise",curFixExercise)
         setResult(110,toMainIntent)*/
@@ -179,12 +271,14 @@ class ExecuteActivity : AppCompatActivity() , AsrManager.UpdateResultListener, T
             }
         }
 
+
         override fun onFinish() {
             Log.d("timer","onfinish timer")
             remain_time.text = "finish"
             rNum += 1
             Log.d("timer",rNum.toString())
             restFlag = !restFlag
+
         }
 
     }
@@ -388,6 +482,7 @@ class ExecuteActivity : AppCompatActivity() , AsrManager.UpdateResultListener, T
         }
         checkAsrResult(str)
     }
+
 
     private fun checkAsrResult(str: String?){
         var routineNum = 0

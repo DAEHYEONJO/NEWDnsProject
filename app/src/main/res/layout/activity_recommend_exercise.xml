@@ -6,4 +6,12 @@
     android:layout_height="match_parent"
     tools:context=".RecommendExerciseActivity">
 
+    <TextView
+        android:id="@+id/recoText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="176dp"
+        android:layout_marginBottom="204dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>
