@@ -63,9 +63,11 @@ class MainActivity : AppCompatActivity() , AsrManager.UpdateResultListener, Trig
             routineList =userData.routine
 //            Log.d("db","rlist : "+routineList[0].name)
 
-        } else {
-            Toast.makeText(this, "전달된 이름이 없습니다", Toast.LENGTH_SHORT).show()
         }
+        /*if(intent.hasExtra("fixExercise")){
+            fixExercise=intent.getSerializableExtra("fixExercise") as FixExercise
+            Log.d("db","execute to main"+fixExercise.benchPressCount.toString())
+        }*/
         PermissionCheck(
             this@MainActivity,
             requestPermission
@@ -99,13 +101,15 @@ class MainActivity : AppCompatActivity() , AsrManager.UpdateResultListener, Trig
         super.onActivityResult(requestCode, resultCode, data)
         if(data!=null){
             when(resultCode){
-                0->{
+                2->{
                     routineList= data.getSerializableExtra("addRoutine") as ArrayList<Routine>
                     Log.d("db",routineList.size.toString())
-                    Log.d("db","null data")
+                    Log.d("db","전달됨")
                 }
-                110->{
+                3->{
                     fixExercise=data.getSerializableExtra("fixExercise") as FixExercise
+                    Log.d("db","전달됐나?"+fixExercise.benchPressCount.toString())
+                    Toast.makeText(this,fixExercise.benchPressCount.toString(),Toast.LENGTH_SHORT).show()
                 }
             }
         }
@@ -313,21 +317,19 @@ class MainActivity : AppCompatActivity() , AsrManager.UpdateResultListener, Trig
     }
 
     private fun checkAsrResult(str: String?){
+        Log.d("TAG", "체크asrRESULT")
         var routineNum = 0
         if (str != null && !str.isEmpty()) {
-
-            if(str!!.contains("실행", true)||str!!.contains("루틴", true)||str!!.contains("루팅",true)){
+            if(str!!.contains("실행", true)){
                 if(str!!.contains("첫번째", true)){
                     Toast.makeText(this, "첫번째 성공", Toast.LENGTH_SHORT).show()
                     Log.d("TAG", "첫번째 성공")
                     routineNum = 0
-
                 }
                 else if(str!!.contains("두번째", true)){
                     Log.d("TAG", "두번째 성공")
                     Toast.makeText(this, "두번째 성공", Toast.LENGTH_SHORT).show()
                     routineNum = 1
-
                 }
                 else if(str!!.contains("세번째", true)){
                     Log.d("TAG", "세번째 성공")
@@ -341,8 +343,8 @@ class MainActivity : AppCompatActivity() , AsrManager.UpdateResultListener, Trig
                     this.putExtra("fixExercise",fixExercise)
                     this.putExtra("routine", routineList[routineNum])
                     this.putExtra("IKEY", ikey)
+                    startActivityForResult(intent,100)
                 }
-                startActivityForResult(intent,100)
             }
             else
             {

@@ -121,12 +121,12 @@ class ExecuteActivity : AppCompatActivity() , AsrManager.UpdateResultListener, T
         stophtwdListening()
         var curFixExercise = FixExercise()
         var exerciseArray :ArrayList<shortExercise> = ArrayList()
-        exerciseArray.add(shortExercise("barbellcurls",0))
-        exerciseArray.add(shortExercise("benchpress",0))
-        exerciseArray.add(shortExercise("deadlift",0))
-        exerciseArray.add(shortExercise("shoulderpress",0))
-        exerciseArray.add(shortExercise("squat",0))
-        for(i in 0 until rNum-1){
+        exerciseArray.add(shortExercise("barbellcurls",fixExercise.barbellCurlsCount))
+        exerciseArray.add(shortExercise("benchpress",fixExercise.benchPressCount))
+        exerciseArray.add(shortExercise("deadlift",fixExercise.deadLiftCount))
+        exerciseArray.add(shortExercise("shoulderpress",fixExercise.shoulderPressCount))
+        exerciseArray.add(shortExercise("squat",fixExercise.squatCount))
+        for(i in 0 until rNum){
             Log.d("routine name",routineArray[i].name+"/"+routineArray[i].count)
             for(element in exerciseArray){
                 Log.d("routine name","element name : "+element.name)
@@ -134,6 +134,7 @@ class ExecuteActivity : AppCompatActivity() , AsrManager.UpdateResultListener, T
                     element.count += routineArray[i].count.toInt()
                     Log.d("routine name","in if element name : "+element.name.toString())
                     Log.d("routine count","in if element name : "+element.count.toString())
+                    break
                 }
             }
         }
@@ -145,9 +146,11 @@ class ExecuteActivity : AppCompatActivity() , AsrManager.UpdateResultListener, T
         toDBFixExercise["fixExercise"]=curFixExercise
         databaseReference.updateChildren(toDBFixExercise as Map<String, FixExercise>)
 
-        /*val toMainIntent=Intent(this,MainActivity::class.java)
+        val toMainIntent=Intent()
         toMainIntent.putExtra("fixExercise",curFixExercise)
-        setResult(110,toMainIntent)*/
+        setResult(3,toMainIntent)
+        onBackPressed()
+        finish()
     }
     class shortExercise(val name: String, var count:Int){
 

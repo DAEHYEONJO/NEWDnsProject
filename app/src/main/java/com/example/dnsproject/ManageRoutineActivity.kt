@@ -18,10 +18,10 @@ class ManageRoutineActivity : AppCompatActivity() {
     private lateinit var ikey:String
     private var adapter:ExerAdapter?=null
     override fun onBackPressed() {
-        Log.d("db","backpressed")
+        Log.d("db","Manage back pressed")
         val resultIntent=Intent()
         resultIntent.putExtra("addRoutine",curRoutine)
-        setResult(0,resultIntent)
+        setResult(2,resultIntent)
         finish()
     }
 
@@ -48,7 +48,7 @@ class ManageRoutineActivity : AppCompatActivity() {
         routineRecyclerView.layoutManager = LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false)
         addExerbut.setOnClickListener {
             //인텐트
-            if (curRoutine.size<=4){
+            if (curRoutine.size<4){
                 val nextIntent = Intent(this, MakeRoutineActivity::class.java)
                 nextIntent.putExtra("nameKey", curRoutine)
                 nextIntent.putExtra("IKEY",ikey)
@@ -66,7 +66,7 @@ class ManageRoutineActivity : AppCompatActivity() {
         if(resultCode==0){
             if(data!=null){
                 curRoutine= data.getSerializableExtra("addRoutine") as ArrayList<Routine>
-                Log.d("db",curRoutine[0].name.toString())
+                Log.d("db",curRoutine.size.toString())
                 adapter = ExerAdapter(
                     curRoutine,
                     LayoutInflater.from(this@ManageRoutineActivity)
