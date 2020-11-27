@@ -11,13 +11,10 @@ import com.example.dnsproject.engine.AsrManager
 import com.example.dnsproject.engine.MicAudioSource
 import com.example.dnsproject.engine.TriggerWordDetectionManager
 import com.example.dnsproject.model.TwdModelLoader
-import com.google.firebase.BuildConfig
 import com.google.gson.Gson
 import com.lge.aip.engine.base.AIEngineReturn
 import com.lge.aip.engine.speech.util.MyDevice
-import kotlinx.android.synthetic.main.activity_execute.*
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.activity_main.htwd_button
 import kotlinx.android.synthetic.main.activity_stop_watch.*
 import java.io.*
 import java.nio.charset.Charset
@@ -60,13 +57,14 @@ class StopWatchActivity : AppCompatActivity() , AsrManager.UpdateResultListener,
     }
 
     private fun start() {
+        Log.d("TAG","스톱워치 시작")
         timerTask = timer(period = 10) {
             time++
             val min = time / 6000
             var sec = time / 100
             sec %= 60
             var secString=if(sec in 0..9) {
-               "0"+sec.toString()
+                "0"+sec.toString()
             }else{
                 sec.toString()
             }
@@ -387,21 +385,14 @@ class StopWatchActivity : AppCompatActivity() , AsrManager.UpdateResultListener,
             if(str!!.contains("시작", true) && !isRunning){
                 isRunning = !isRunning
                 if (isRunning) start()
-                stopAndDestroyEngine()
-                stophtwdListening()
             }
             else
             {
-                Toast.makeText(this@StopWatchActivity, "실패", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this@StopWatchActivity, "루틴 가져오기 실패", Toast.LENGTH_SHORT).show()
                 //htwd engine 다시 실행해야함
                 watch_htwd_button.isChecked = true
                 watch_htwd_button.callOnClick()
             }
-        }
-        else{
-            /* htwd engine 가동 */
-            htwd_button.isChecked = true
-            htwd_button.callOnClick()
         }
     }
 
@@ -410,7 +401,6 @@ class StopWatchActivity : AppCompatActivity() , AsrManager.UpdateResultListener,
             if (str != null && !str.isEmpty()) {
                 // mScLog.updateKeyword(str)
             }
-
         }
     }
 

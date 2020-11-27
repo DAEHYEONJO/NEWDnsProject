@@ -6,6 +6,7 @@ import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.os.CountDownTimer
+import android.os.*
 import android.util.Log
 import android.view.View
 import android.widget.Toast
@@ -49,6 +50,7 @@ class ExecuteActivity : AppCompatActivity() , AsrManager.UpdateResultListener, T
     private var routineSize:Int = 3
     var rNum : Int = 0
 
+
     /* tts & pcm file path */
     private val tenSecPcm="/sdcard/dnsTTS/10seconds.pcm"
     private val defaultPcmPath="/sdcard/dnsTTS/"
@@ -82,19 +84,32 @@ class ExecuteActivity : AppCompatActivity() , AsrManager.UpdateResultListener, T
             if(restFlag){ // 휴식타이머
                 rNum--
                 ttsManager.playPcmForFileModeStart(restStartPcm)
-                current_action.text = "휴식^^"
+                runOnUiThread{current_action.text = "휴식^^"}
                 myTimer = MyTimer(200, 1000)
-                myTimer.start()
+                //myTimer.start()
+                val handler= Handler(Looper.getMainLooper())
+                handler.postDelayed(object :Runnable{
+                    override fun run() {
+                        myTimer.start()
+                    }
+                },0)
+
             }
             else{
-                current_action.text = routineArray[rNum].name
+                runOnUiThread{current_action.text = routineArray[rNum].name}
                 Log.d("FFINDD", "start $rNum action 운동")
                 val exePath=defaultPcmPath+routineArray[rNum].name+"_start.pcm"
                 ttsManager.playPcmForFileModeStart(exePath)
                 val futureTime = routineArray[rNum].count.toLong()*COUNTTIME
                 //mytimer.start()
                 myTimer = MyTimer(futureTime, COUNTTIME)
-                myTimer.start()
+                //myTimer.start()
+                val handler= Handler(Looper.getMainLooper())
+                handler.postDelayed(object :Runnable{
+                    override fun run() {
+                        myTimer.start()
+                    }
+                },0)
             }
         }
 
@@ -134,12 +149,12 @@ class ExecuteActivity : AppCompatActivity() , AsrManager.UpdateResultListener, T
         stophtwdListening()
         var curFixExercise = FixExercise()
         var exerciseArray :ArrayList<shortExercise> = ArrayList()
-        exerciseArray.add(shortExercise("barbellcurls",0))
-        exerciseArray.add(shortExercise("benchpress",0))
-        exerciseArray.add(shortExercise("deadlift",0))
-        exerciseArray.add(shortExercise("shoulderpress",0))
-        exerciseArray.add(shortExercise("squat",0))
-        for(i in 0 until rNum-1){
+        exerciseArray.add(shortExercise("barbellcurls",fixExercise.barbellCurlsCount))
+        exerciseArray.add(shortExercise("benchpress",fixExercise.benchPressCount))
+        exerciseArray.add(shortExercise("deadlift",fixExercise.deadLiftCount))
+        exerciseArray.add(shortExercise("shoulderpress",fixExercise.shoulderPressCount))
+        exerciseArray.add(shortExercise("squat",fixExercise.squatCount))
+        for(i in 0 until rNum){
             Log.d("routine name",routineArray[i].name+"/"+routineArray[i].count)
             for(element in exerciseArray){
                 Log.d("routine name","element name : "+element.name)
@@ -147,6 +162,7 @@ class ExecuteActivity : AppCompatActivity() , AsrManager.UpdateResultListener, T
                     element.count += routineArray[i].count.toInt()
                     Log.d("routine name","in if element name : "+element.name.toString())
                     Log.d("routine count","in if element name : "+element.count.toString())
+                    break
                 }
             }
         }
@@ -156,8 +172,7 @@ class ExecuteActivity : AppCompatActivity() , AsrManager.UpdateResultListener, T
         val databaseReference=FirebaseDatabase.getInstance().reference.child(key)
         val toDBFixExercise: MutableMap<String, FixExercise> = HashMap()
         toDBFixExercise["fixExercise"]=curFixExercise
-        databaseReference.updateChildren(toDBFixExercise as Map<String, FixExercise>)
-        //윤성 작업
+//윤성 작업
         val todayExer : MutableMap<String, String> = HashMap()
 
         //하드코딩 ㅈㅅ
@@ -166,6 +181,7 @@ class ExecuteActivity : AppCompatActivity() , AsrManager.UpdateResultListener, T
         for(i in 0 until routineArray.size)
         {
 
+            //<<<<<<< bye
             if(routineArray[i].name=="benchpress")
             {
                 //idx=0
@@ -196,7 +212,6 @@ class ExecuteActivity : AppCompatActivity() , AsrManager.UpdateResultListener, T
                 exerSetCount[4]++
                 exerCount[4] = exerCount[4]+routineArray[i].count.toString().toInt()
             }
-
         }
 
         //파베 가져오기
@@ -235,11 +250,13 @@ class ExecuteActivity : AppCompatActivity() , AsrManager.UpdateResultListener, T
             override fun onCancelled(error: DatabaseError) {
             }
         })
-
         //윤성 작업 끝
-        /*val toMainIntent=Intent(this,MainActivity::class.java)
+        databaseReference.updateChildren(toDBFixExercise as Map<String, FixExercise>)
+        val toMainIntent=Intent()
         toMainIntent.putExtra("fixExercise",curFixExercise)
-        setResult(110,toMainIntent)*/
+        setResult(3,toMainIntent)
+        onBackPressed()
+        finish()
     }
     class shortExercise(val name: String, var count:Int){
 
@@ -248,8 +265,7 @@ class ExecuteActivity : AppCompatActivity() , AsrManager.UpdateResultListener, T
     inner class MyTimer(
         millisInFuture: Long,
         countDownInterval: Long
-    ) :
-        CountDownTimer(millisInFuture, countDownInterval) {
+    ) : CountDownTimer(millisInFuture, countDownInterval) {
 
         @SuppressLint("SetTextI18n")
         override fun onTick(millisUntilFinished: Long) {
@@ -264,10 +280,10 @@ class ExecuteActivity : AppCompatActivity() , AsrManager.UpdateResultListener, T
                         Toast.makeText(this@ExecuteActivity,"10초남음",Toast.LENGTH_SHORT).show()
                     ttsManager.playPcmForFileModeStart(tenSecPcm)
                 }
-                remain_time.text = (millisUntilFinished / 1000.toLong()).toString() + " 초"
+                runOnUiThread{remain_time.text = (millisUntilFinished / 1000.toLong()).toString() + " 초"}
             }
             else{//운동 타이머
-                remain_time.text = (millisUntilFinished / COUNTTIME.toLong()).toString() + " 개"
+                runOnUiThread{remain_time.text = (millisUntilFinished / COUNTTIME.toLong()).toString() + " 개"}
             }
         }
 
@@ -284,6 +300,7 @@ class ExecuteActivity : AppCompatActivity() , AsrManager.UpdateResultListener, T
     }
 
     override fun onResume() {
+        Log.d("TAG","ONRESUME 온리쥼")
         super.onResume()
         initEngine()
         initButtonStart()
