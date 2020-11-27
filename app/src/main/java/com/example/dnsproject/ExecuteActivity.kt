@@ -29,7 +29,7 @@ import kotlinx.android.synthetic.main.activity_login.*
 import java.io.*
 import java.nio.charset.Charset
 import java.nio.charset.StandardCharsets
-import java.util.ArrayList
+import kotlin.collections.ArrayList
 import kotlin.properties.Delegates
 
 
@@ -37,7 +37,7 @@ import kotlin.properties.Delegates
     routine을 실행하는 Activity
  */
 class ExecuteActivity : AppCompatActivity() , AsrManager.UpdateResultListener, TriggerWordDetectionManager.UpdateResultListener {
-    val COUNTTIME : Long = 50 //운동 count시간 0.5초로 해둠->0.5로바꿈
+    val COUNTTIME : Long = 500 //운동 count시간 0.5초로 해둠->0.5로바꿈
     lateinit var mRoutine:Routine
     lateinit var routineArray: ArrayList<Exercise>
     lateinit var fixExercise: FixExercise
@@ -83,6 +83,7 @@ class ExecuteActivity : AppCompatActivity() , AsrManager.UpdateResultListener, T
                 val exePath=defaultPcmPath+routineArray[rNum].name+"_start.pcm"
                 ttsManager.playPcmForFileModeStart(exePath)
                 val futureTime = routineArray[rNum].count.toLong()*COUNTTIME
+                //mytimer.start()
                 myTimer = MyTimer(futureTime, COUNTTIME)
                 myTimer.start()
             }
@@ -119,19 +120,20 @@ class ExecuteActivity : AppCompatActivity() , AsrManager.UpdateResultListener, T
         stopAndDestroyEngine()
         stophtwdListening()
         var curFixExercise = FixExercise()
-        var exerciseArray = Array(5)
-
-        { shortExercise("barbellcurls",0); shortExercise("benchpress",0);shortExercise("deadlift",0);
-            shortExercise("shoulderpress",0); shortExercise("squat",0)}
-
+        var exerciseArray :ArrayList<shortExercise> = ArrayList()
+        exerciseArray.add(shortExercise("barbellcurls",0))
+        exerciseArray.add(shortExercise("benchpress",0))
+        exerciseArray.add(shortExercise("deadlift",0))
+        exerciseArray.add(shortExercise("shoulderpress",0))
+        exerciseArray.add(shortExercise("squat",0))
         for(i in 0 until rNum-1){
             Log.d("routine name",routineArray[i].name+"/"+routineArray[i].count)
             for(element in exerciseArray){
-                Log.d("element name",element.name)
+                Log.d("routine name","element name : "+element.name)
                 if(element.name == routineArray[i].name){
                     element.count += routineArray[i].count.toInt()
-                    Log.d("routine name",element.name.toString())
-                    Log.d("routine count",element.count.toString())
+                    Log.d("routine name","in if element name : "+element.name.toString())
+                    Log.d("routine count","in if element name : "+element.count.toString())
                 }
             }
         }
@@ -166,16 +168,16 @@ class ExecuteActivity : AppCompatActivity() , AsrManager.UpdateResultListener, T
                         Toast.makeText(this@ExecuteActivity,"10초남음",Toast.LENGTH_SHORT).show()
                     ttsManager.playPcmForFileModeStart(tenSecPcm)
                 }
-                remain_time.text = (millisUntilFinished / 1000.toLong()).toString() + " 초"
+                runOnUiThread {remain_time.text = (millisUntilFinished / 1000.toLong()).toString() + " 초"}
             }
             else{//운동 타이머
-                remain_time.text = (millisUntilFinished / COUNTTIME.toLong()).toString() + " 개"
+                runOnUiThread{remain_time.text = (millisUntilFinished / COUNTTIME.toLong()).toString() + " 개"}
             }
         }
 
         override fun onFinish() {
             Log.d("timer","onfinish timer")
-            remain_time.text = "finish"
+            runOnUiThread { remain_time.text = "finish" }
             rNum += 1
             Log.d("timer",rNum.toString())
             restFlag = !restFlag

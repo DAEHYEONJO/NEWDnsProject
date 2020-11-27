@@ -336,7 +336,7 @@ class MainActivity : AppCompatActivity() , AsrManager.UpdateResultListener, Trig
                     this.putExtra("routine", routineList[routineNum])
                     this.putExtra("IKEY", ikey)
                 }
-                startActivity(intent)
+                startActivityForResult(intent,100)
             }
             else
             {
