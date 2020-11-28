@@ -25,20 +25,22 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="horizontal">
+
         <ToggleButton
+            android:id="@+id/asr_button"
             android:layout_width="100dp"
             android:layout_height="100dp"
-            android:id="@+id/asr_button"
             android:enabled="false"
 
-            />
+            android:visibility="gone" />
+
         <ToggleButton
             android:id="@+id/htwd_button"
             android:layout_width="100dp"
             android:layout_height="100dp"
             android:enabled="false"
 
-            />
+            android:visibility="gone" />
     </LinearLayout>
 
 </LinearLayout>
