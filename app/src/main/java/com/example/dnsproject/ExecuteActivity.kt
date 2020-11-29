@@ -3,12 +3,14 @@ package com.example.dnsproject
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
+import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
 import android.os.CountDownTimer
 import android.os.*
 import android.util.Log
 import android.view.View
+import android.view.animation.Animation
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
@@ -41,6 +43,7 @@ import kotlin.properties.Delegates
 /*
     routine을 실행하는 Activity
  */
+@RequiresApi(Build.VERSION_CODES.N)
 class ExecuteActivity : AppCompatActivity() , AsrManager.UpdateResultListener, TriggerWordDetectionManager.UpdateResultListener {
     val COUNTTIME : Long = 500 //운동 count시간 0.5초로 해둠->0.5로바꿈
     lateinit var mRoutine:Routine
@@ -84,19 +87,27 @@ class ExecuteActivity : AppCompatActivity() , AsrManager.UpdateResultListener, T
             if(restFlag){ // 휴식타이머
                 rNum--
                 ttsManager.playPcmForFileModeStart(restStartPcm)
-                runOnUiThread{current_action.text = "휴식^^"}
-                myTimer = MyTimer(200, 1000)
+                runOnUiThread{current_action.text = "휴식^^"
+                   /* progress_circular.setClockwise(true)
+                    progress_circular.foregroundProgressColor= Color.BLACK
+                    progress_circular.backgroundProgressColor=Color.WHITE
+                    val listener=progress_circular.setProgressWithAnimation(0F,500)*/
+                }
+
+                myTimer = MyTimer(500, 1000)
                 //myTimer.start()
                 val handler= Handler(Looper.getMainLooper())
                 handler.postDelayed(object :Runnable{
                     override fun run() {
                         myTimer.start()
+
                     }
                 },0)
 
             }
             else{
-                runOnUiThread{current_action.text = routineArray[rNum].name}
+                runOnUiThread{
+                    current_action.text = routineArray[rNum].name}
                 Log.d("FFINDD", "start $rNum action 운동")
                 val exePath=defaultPcmPath+routineArray[rNum].name+"_start.pcm"
                 ttsManager.playPcmForFileModeStart(exePath)
@@ -277,7 +288,7 @@ class ExecuteActivity : AppCompatActivity() , AsrManager.UpdateResultListener, T
                 if(millisUntilFinished.toInt() in 10000..10999){
                     //tts 10초 남았습니다.
                     Log.d("timer", " 10초남았을때 : "+millisUntilFinished.toString())
-                        Toast.makeText(this@ExecuteActivity,"10초남음",Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this@ExecuteActivity,"10초남음",Toast.LENGTH_SHORT).show()
                     ttsManager.playPcmForFileModeStart(tenSecPcm)
                 }
                 runOnUiThread{remain_time.text = (millisUntilFinished / 1000.toLong()).toString() + " 초"}

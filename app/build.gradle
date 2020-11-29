@@ -79,5 +79,5 @@ dependencies {
     implementation name: 'speech-engine-debug', ext: 'aar'
     implementation name: 'twd-engine-debug', ext: 'aar'
 
-
+    compile 'com.jackandphantom.android:circularprogressbar:1.2.0'
 }
