@@ -8,7 +8,7 @@
     tools:context=".StopWatchActivity">
 
 
-    
+
     <View
         android:id="@+id/view"
         android:layout_width="0dp"
