@@ -14,6 +14,16 @@
         android:text="무슨 운동이게유"
         android:id="@+id/current_action"
         />
+    <!--<com.jackandphantom.circularprogressbar.CircleProgressbar
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:id="@+id/progress_circular"
+        app:cpb_progress="100"
+        app:cpb_roundedCorner="true"
+        app:cpb_foregroundProgressWidth="15"
+        app:cpb_foregroundProgressColor="#000000"
+        android:forceHasOverlappingRendering="true"
+        app:cpb_backgroundProgressColor="@color/white"/>-->
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
