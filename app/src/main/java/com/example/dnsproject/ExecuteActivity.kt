@@ -165,6 +165,11 @@ class ExecuteActivity : AppCompatActivity() , AsrManager.UpdateResultListener, T
         exerciseArray.add(shortExercise("deadlift",fixExercise.deadLiftCount))
         exerciseArray.add(shortExercise("shoulderpress",fixExercise.shoulderPressCount))
         exerciseArray.add(shortExercise("squat",fixExercise.squatCount))
+        exerciseArray.add(shortExercise("crunch",fixExercise.crunchCount))
+        exerciseArray.add(shortExercise("plankJump",fixExercise.plankJumpCount))
+        exerciseArray.add(shortExercise("burpee",fixExercise.burpeeTestCount))
+        exerciseArray.add(shortExercise("lunge",fixExercise.lungeCount))
+        exerciseArray.add(shortExercise("pullUp",fixExercise.pullUpCount))
         for(i in 0 until rNum){
             Log.d("routine name",routineArray[i].name+"/"+routineArray[i].count)
             for(element in exerciseArray){
@@ -187,8 +192,8 @@ class ExecuteActivity : AppCompatActivity() , AsrManager.UpdateResultListener, T
         val todayExer : MutableMap<String, String> = HashMap()
 
         //하드코딩 ㅈㅅ
-        var exerSetCount =arrayOf(0,0,0,0,0)
-        var exerCount =arrayOf(0,0,0,0,0)
+        var exerSetCount =arrayOf(0,0,0,0,0,0,0,0,0,0)
+        var exerCount =arrayOf(0,0,0,0,0,0,0,0,0,0)
         for(i in 0 until routineArray.size)
         {
 
@@ -223,6 +228,37 @@ class ExecuteActivity : AppCompatActivity() , AsrManager.UpdateResultListener, T
                 exerSetCount[4]++
                 exerCount[4] = exerCount[4]+routineArray[i].count.toString().toInt()
             }
+            else if(routineArray[i].name=="crunch")
+            {
+                //idx=4
+                exerSetCount[5]++
+                exerCount[5] = exerCount[5]+routineArray[i].count.toString().toInt()
+            }
+            else if(routineArray[i].name=="plankJump")
+            {
+                //idx=4
+                exerSetCount[6]++
+                exerCount[6] = exerCount[6]+routineArray[i].count.toString().toInt()
+            }
+            else if(routineArray[i].name=="burpee")
+            {
+                //idx=4
+                exerSetCount[7]++
+                exerCount[7] = exerCount[7]+routineArray[i].count.toString().toInt()
+            }
+            else if(routineArray[i].name=="lunge")
+            {
+                //idx=4
+                exerSetCount[8]++
+                exerCount[8] = exerCount[8]+routineArray[i].count.toString().toInt()
+            }
+            else if(routineArray[i].name=="pullUp")
+            {
+                //idx=4
+                exerSetCount[9]++
+                exerCount[9] = exerCount[9]+routineArray[i].count.toString().toInt()
+            }
+
         }
 
         //파베 가져오기
@@ -234,6 +270,11 @@ class ExecuteActivity : AppCompatActivity() , AsrManager.UpdateResultListener, T
         ref.child("barbellcurls").setValue(0)
         ref.child("deadlift").setValue(0)
         ref.child("squat").setValue(0)
+        ref.child("crunch").setValue(0)
+        ref.child("plankJump").setValue(0)
+        ref.child("burpee").setValue(0)
+        ref.child("lunge").setValue(0)
+        ref.child("pullUp").setValue(0)
 
         ref.addListenerForSingleValueEvent(object : ValueEventListener
         {
@@ -251,6 +292,17 @@ class ExecuteActivity : AppCompatActivity() , AsrManager.UpdateResultListener, T
                     ref6.setValue((exerSetCount[3]).toString())
                     var ref7 = databaseReference.child("exerDate").child(onlyDate.toString()).child("squat")
                     ref7.setValue((exerSetCount[4]).toString())
+                    var ref8 = databaseReference.child("exerDate").child(onlyDate.toString()).child("crunch")
+                    ref8.setValue((exerSetCount[5]).toString())
+                    var ref9 = databaseReference.child("exerDate").child(onlyDate.toString()).child("plankJump")
+                    ref9.setValue((exerSetCount[6]).toString())
+                    var ref10 = databaseReference.child("exerDate").child(onlyDate.toString()).child("burpee")
+                    ref10.setValue((exerSetCount[7]).toString())
+                    var ref11 = databaseReference.child("exerDate").child(onlyDate.toString()).child("lunge")
+                    ref11.setValue((exerSetCount[8]).toString())
+                    var ref12 = databaseReference.child("exerDate").child(onlyDate.toString()).child("pullUp")
+                    ref12.setValue((exerSetCount[9]).toString())
+
                 }
                 else
                 {
