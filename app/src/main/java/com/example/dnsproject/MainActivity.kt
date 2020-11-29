@@ -54,6 +54,8 @@ class MainActivity : AppCompatActivity() , AsrManager.UpdateResultListener, Trig
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        // 오류떠서 깃허브 연결 실험중
+
         //아 배고파..
         if (intent.hasExtra("nameKey")) {
             userData = intent.getSerializableExtra("nameKey") as User
