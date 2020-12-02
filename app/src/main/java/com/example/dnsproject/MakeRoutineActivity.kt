@@ -70,11 +70,6 @@ class MakeRoutineActivity : AppCompatActivity() {
                     "바벨컬"->{exeName="barbellcurls"}
                     "데드리프트"->{exeName="deadlift"}
                     "스쿼트"->{exeName="squat"}
-                    "크런치"->{exeName="crunch"}
-                    "플랭크점프"->{exeName="plankJump"}
-                    "버피테스트"->{exeName="burpee"}
-                    "런지"->{exeName="lunge"}
-                    "턱걸이"->{exeName="pullUp"}
                     else->{exeName="없음"}
                 }
                 Toast.makeText(this@MakeRoutineActivity, exeName, Toast.LENGTH_SHORT).show()

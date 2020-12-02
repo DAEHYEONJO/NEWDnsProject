@@ -59,31 +59,7 @@ class RecommendExerciseActivity : AppCompatActivity() {
                     recoText.text = "스쿼트"
                     imageView2.setBackgroundResource(R.drawable.squat)
                 }
-                else if(sortedMyValueList[0].first.toString() == "crunchCount")
-                {
-                    recoText.text = "크런치"
-                    imageView2.setBackgroundResource(R.drawable.crunch)
-                }
-                else if(sortedMyValueList[0].first.toString() == "plankJumpCount")
-                {
-                    recoText.text = "플랭크점프"
-                    imageView2.setBackgroundResource(R.drawable.plank)
-                }
-                else if(sortedMyValueList[0].first.toString() == "burpeeTestCount")
-                {
-                    recoText.text = "버피테스트"
-                    imageView2.setBackgroundResource(R.drawable.burpee)
-                }
-                else if(sortedMyValueList[0].first.toString() == "lungeCount")
-                {
-                    recoText.text = "런지"
-                    imageView2.setBackgroundResource(R.drawable.lunge)
-                }
-                else if(sortedMyValueList[0].first.toString() == "pullUpCount")
-                {
-                    recoText.text = "턱걸이"
-                    imageView2.setBackgroundResource(R.drawable.chinning)
-                }
+
 
                 //recoText.text = sortedMyValueList[0].first.toString()
 
