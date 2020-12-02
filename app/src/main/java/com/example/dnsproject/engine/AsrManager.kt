@@ -188,7 +188,7 @@ class AsrManager {
             sHandler.post {
                 val resultString =
                     results.getString(ResultBundleKey.RESULT_STRING)
-                mUpdateResultListener!!.updateResult("\nonAsrResults: $resultString")
+                //mUpdateResultListener!!.updateResult("\nonAsrResults: $resultString")
                 Log.d("TAG", "onASRResults:$resultString")
 
             }
@@ -202,7 +202,7 @@ class AsrManager {
             sHandler.post {
                 val resultString =
                     results.getString(ResultBundleKey.RESULT_STRING)
-                mUpdateResultListener!!.updateResult("onKeywordResults: $resultString")
+                //mUpdateResultListener!!.updateResult("onKeywordResults: $resultString")
                 Log.d("TAG", "onKeywordResults:$resultString")
             }
         }
@@ -215,7 +215,7 @@ class AsrManager {
         override fun onError(error: Int, errorText: String) {
             Log.v(TAG, "onError code=$error: $errorText")
             sHandler.post {
-                mUpdateResultListener!!.updateResult("onError: $errorText")
+                //mUpdateResultListener!!.updateResult("onError: $errorText")
                 stopListening()
             }
         }
