@@ -1,16 +1,13 @@
 package com.example.dnsproject
 
 import android.annotation.SuppressLint
-import android.content.Context
 import android.content.Intent
-import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
 import android.os.CountDownTimer
 import android.os.*
 import android.util.Log
 import android.view.View
-import android.view.animation.Animation
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
@@ -22,11 +19,9 @@ import com.example.dnsproject.engine.TriggerWordDetectionManager
 import com.example.dnsproject.exeClasses.Exercise
 import com.example.dnsproject.exeClasses.FixExercise
 import com.example.dnsproject.exeClasses.Routine
-import com.example.dnsproject.exeClasses.User
 import com.example.dnsproject.model.TwdModelLoader
 import com.example.dnsproject.tts.TTSManager
 import com.google.firebase.database.*
-import com.google.firebase.ktx.Firebase
 import com.google.gson.Gson
 import com.lge.aip.engine.base.AIEngineReturn
 import com.lge.aip.engine.speech.util.MyDevice
@@ -45,7 +40,7 @@ import kotlin.properties.Delegates
  */
 @RequiresApi(Build.VERSION_CODES.N)
 class ExecuteActivity : AppCompatActivity() , AsrManager.UpdateResultListener, TriggerWordDetectionManager.UpdateResultListener {
-    val COUNTTIME : Long = 500 //운동 count시간 0.5초로 해둠->0.5로바꿈
+    val COUNTTIME : Long = 300 //운동 count시간 0.5초로 해둠->0.5로바꿈
     lateinit var mRoutine:Routine
     lateinit var routineArray: ArrayList<Exercise>
     lateinit var fixExercise: FixExercise
@@ -94,15 +89,8 @@ class ExecuteActivity : AppCompatActivity() , AsrManager.UpdateResultListener, T
                     val listener=progress_circular.setProgressWithAnimation(0F,500)*/
                 }
 
-                myTimer = MyTimer(500, 1000)
-                //myTimer.start()
-                val handler= Handler(Looper.getMainLooper())
-                handler.postDelayed(object :Runnable{
-                    override fun run() {
-                        myTimer.start()
-
-                    }
-                },0)
+                myTimer = MyTimer(200, 1000)
+                myTimer.start()
 
             }
             else{
@@ -114,16 +102,10 @@ class ExecuteActivity : AppCompatActivity() , AsrManager.UpdateResultListener, T
                 val futureTime = routineArray[rNum].count.toLong()*COUNTTIME
                 //mytimer.start()
                 myTimer = MyTimer(futureTime, COUNTTIME)
-                //myTimer.start()
-                val handler= Handler(Looper.getMainLooper())
-                handler.postDelayed(object :Runnable{
-                    override fun run() {
-                        myTimer.start()
-                    }
-                },0)
+                myTimer.start()
+
             }
         }
-
     })
 
 

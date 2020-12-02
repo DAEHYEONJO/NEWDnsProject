@@ -307,7 +307,7 @@ class MainActivity : AppCompatActivity() , AsrManager.UpdateResultListener, Trig
         })
     }
     override fun updateResult(str: String?) {
-
+        Log.d("exeLoglOG","updateResult")
         runOnUiThread {
             asr_button.isChecked = false
             asr_button.callOnClick()
@@ -318,10 +318,11 @@ class MainActivity : AppCompatActivity() , AsrManager.UpdateResultListener, Trig
     }
 
     private fun checkAsrResult(str: String?){
-        Log.d("TAG", "체크asrRESULT")
+        Log.d("exeLoglOG", "체크asrRESULT")
         var routineNum = 0
         if (str != null && !str.isEmpty()) {
-            if(str!!.contains("실행", true)){
+            Log.d("exeLoglOG",str)
+            if(str!!.contains("실행", true)||str!!.contains("루팅", true)||str!!.contains("루틴", true)){
                 if(str!!.contains("첫번째", true)){
                     Toast.makeText(this, "첫번째 성공", Toast.LENGTH_SHORT).show()
                     Log.d("TAG", "첫번째 성공")
@@ -341,6 +342,7 @@ class MainActivity : AppCompatActivity() , AsrManager.UpdateResultListener, Trig
                 val intent = Intent(this@MainActivity, ExecuteActivity::class.java)
 
                 intent.apply {
+                    Log.d("exeLoglOG","익스큐트 액티비티 시작")
                     this.putExtra("fixExercise",fixExercise)
                     this.putExtra("routine", routineList[routineNum])
                     this.putExtra("IKEY", ikey)
