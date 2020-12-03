@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
+import androidx.appcompat.widget.Toolbar
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
@@ -18,6 +19,10 @@ class ExerciseRecordActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_exercise_record)
+        val toolbar = findViewById(R.id.recordtoolbar) as Toolbar
+        setSupportActionBar(toolbar)
+        val ab = supportActionBar!!
+        ab.setDisplayShowTitleEnabled(false)
 
         key = intent.getStringExtra("IKEY").toString()
         val databaseReference= FirebaseDatabase.getInstance().reference.child(key)
