@@ -27,6 +27,7 @@ import com.lge.aip.engine.base.AIEngineReturn
 import com.lge.aip.engine.speech.util.MyDevice
 import kotlinx.android.synthetic.main.activity_execute.*
 import kotlinx.android.synthetic.main.activity_login.*
+import org.junit.rules.ExternalResource
 import java.io.*
 import java.nio.charset.Charset
 import java.nio.charset.StandardCharsets
@@ -47,6 +48,7 @@ class ExecuteActivity : AppCompatActivity() , AsrManager.UpdateResultListener, T
     private lateinit var myTimer : MyTimer
     private var routineSize:Int = 3
     var rNum : Int = 0
+    private var setNum=0
 
 
     /* tts & pcm file path */
@@ -80,6 +82,7 @@ class ExecuteActivity : AppCompatActivity() , AsrManager.UpdateResultListener, T
         }
         else{
             if(restFlag){ // 휴식타이머
+                setNum=0
                 rNum--
                 ttsManager.playPcmForFileModeStart(restStartPcm)
                 runOnUiThread{current_action.text = "휴식^^"
@@ -94,8 +97,11 @@ class ExecuteActivity : AppCompatActivity() , AsrManager.UpdateResultListener, T
 
             }
             else{
+                setNum++
                 runOnUiThread{
-                    current_action.text = routineArray[rNum].name}
+                    current_action.text = routineArray[rNum].name
+                    set_num.text=setNum.toString()+" / "+routineArray[rNum].setCount+"세트"
+                }
                 Log.d("FFINDD", "start $rNum action 운동")
                 val exePath=defaultPcmPath+routineArray[rNum].name+"_start.pcm"
                 ttsManager.playPcmForFileModeStart(exePath)
@@ -107,7 +113,6 @@ class ExecuteActivity : AppCompatActivity() , AsrManager.UpdateResultListener, T
             }
         }
     })
-
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
