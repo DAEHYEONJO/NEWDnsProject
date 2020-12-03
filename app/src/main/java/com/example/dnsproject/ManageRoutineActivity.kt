@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.widget.*
+import androidx.appcompat.widget.Toolbar
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.dnsproject.adapter.ExerAdapter
 import com.example.dnsproject.exeClasses.Routine
@@ -28,6 +29,10 @@ class ManageRoutineActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_manage_routine)
+        val toolbar = findViewById(R.id.routinetoolbar) as Toolbar
+        setSupportActionBar(toolbar)
+        val ab = supportActionBar!!
+        ab.setDisplayShowTitleEnabled(false)
 
 
         if (intent.hasExtra("nameKey")) {
@@ -39,7 +44,7 @@ class ManageRoutineActivity : AppCompatActivity() {
             Toast.makeText(this, "전달된 이름이 없습니다", Toast.LENGTH_SHORT).show()
         }
 
-        val addExerbut : FloatingActionButton = findViewById(R.id.addExerButton)
+        val addExerbut : Button = findViewById(R.id.addExerButton)
         adapter = ExerAdapter(
             curRoutine,
             LayoutInflater.from(this@ManageRoutineActivity)

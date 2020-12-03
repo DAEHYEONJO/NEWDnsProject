@@ -11,6 +11,7 @@ import android.view.View
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.Toolbar
 import com.example.dnsproject.config.*
 import com.example.dnsproject.config.HTWDConfigLoader
 import com.example.dnsproject.engine.AsrManager
@@ -34,7 +35,6 @@ import java.nio.charset.StandardCharsets
 import java.time.LocalDate
 import kotlin.collections.ArrayList
 import kotlin.properties.Delegates
-
 
 /*
     routine을 실행하는 Activity
@@ -86,6 +86,7 @@ class ExecuteActivity : AppCompatActivity() , AsrManager.UpdateResultListener, T
                 rNum--
                 ttsManager.playPcmForFileModeStart(restStartPcm)
                 runOnUiThread{current_action.text = "휴식^^"
+                    set_num.visibility-View.GONE
                    /* progress_circular.setClockwise(true)
                     progress_circular.foregroundProgressColor= Color.BLACK
                     progress_circular.backgroundProgressColor=Color.WHITE
@@ -99,6 +100,7 @@ class ExecuteActivity : AppCompatActivity() , AsrManager.UpdateResultListener, T
             else{
                 setNum++
                 runOnUiThread{
+                    set_num.visibility=View.VISIBLE
                     current_action.text = routineArray[rNum].name
                     set_num.text=setNum.toString()+" / "+routineArray[rNum].setCount+"세트"
                 }
@@ -118,6 +120,10 @@ class ExecuteActivity : AppCompatActivity() , AsrManager.UpdateResultListener, T
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_execute)
+        val toolbar = findViewById(R.id.exertoolbar) as Toolbar
+        setSupportActionBar(toolbar)
+        val ab = supportActionBar!!
+        ab.setDisplayShowTitleEnabled(false)
         mRoutine = intent.getSerializableExtra("routine") as Routine
         key = intent.getStringExtra("IKEY").toString()
         fixExercise = intent.getSerializableExtra("fixExercise") as FixExercise

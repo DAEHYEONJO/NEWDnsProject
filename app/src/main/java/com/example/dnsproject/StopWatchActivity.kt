@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.Toast
+import androidx.appcompat.widget.Toolbar
 import com.example.dnsproject.config.*
 import com.example.dnsproject.config.HTWDConfigLoader
 import com.example.dnsproject.engine.AsrManager
@@ -39,6 +40,10 @@ class StopWatchActivity : AppCompatActivity() , AsrManager.UpdateResultListener,
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_stop_watch)
+        val toolbar = findViewById(R.id.stoptoolbar) as Toolbar
+        setSupportActionBar(toolbar)
+        val ab = supportActionBar!!
+        ab.setDisplayShowTitleEnabled(false)
         initEngine()
         initButtonStart()
         watch_htwd_button.isChecked = true

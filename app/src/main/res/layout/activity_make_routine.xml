@@ -14,15 +14,18 @@
     app:umanoShadowHeight="10dp">
 
     <LinearLayout
+        android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
+
         <TextView
+            android:fontFamily="@font/seoulhangangm"
             android:id="@+id/textview"
-            android:visibility="visible"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
+            android:text="아직 추가한 운동이 없습니다."
             android:textSize="50dp"
-            android:text="아직 추가한 운동이 없습니다."/>
+            android:visibility="visible" />
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/savedExerlistView"
             android:layout_width="match_parent"
@@ -36,47 +39,71 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:clickable="true"
+        android:background="@drawable/spinner_design"
         android:focusable="false"
         android:id="@+id/dragView">
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="100dp"
             android:orientation="vertical">
+
             <TextView
+                android:fontFamily="@font/seoulhangangm"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="5dp"
                 android:text="운동 목록"
-                android:textSize="40dp"/>
+                android:textColor="#000000"
+                android:textSize="32sp"
+                android:textStyle="bold" />
         </LinearLayout>
         <LinearLayout
+
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
             <Spinner
+                android:fontFamily="@font/seoulhangangm"
+                android:spinnerMode="dialog"
                 android:id="@+id/exerSpinner"
                 android:layout_width="match_parent"
                 android:layout_height="50dp" />
 
             <Spinner
+                android:fontFamily="@font/seoulhangangm"
+                android:spinnerMode="dialog"
                 android:id="@+id/numSpinner"
                 android:layout_width="match_parent"
                 android:layout_height="50dp" />
 
             <Spinner
+                android:fontFamily="@font/seoulhangangm"
+                android:spinnerMode="dialog"
                 android:id="@+id/setSpinner"
                 android:layout_width="match_parent"
                 android:layout_height="50dp" />
 
             <Spinner
+                android:fontFamily="@font/seoulhangangm"
+                android:spinnerMode="dialog"
                 android:id="@+id/weightSpinner"
                 android:layout_width="match_parent"
                 android:layout_height="50dp" />
         </LinearLayout>
         <Button
+            android:fontFamily="@font/seoulhangangm"
             android:id="@+id/addExercise"
-            android:layout_width="wrap_content"
+            android:layout_width="100dp"
             android:layout_height="wrap_content"
-            android:text="추가하기"/>
+            android:layout_gravity="center"
+            android:background="@drawable/button_rectangle"
+            android:clickable="true"
+            android:src="@drawable/ic_baseline_add_24"
+            android:text="추가하기"
+            android:textColor="#FFFFFF"
+            android:textSize="18sp"
+            android:textStyle="bold" />
 
     </LinearLayout>
 </com.sothree.slidinguppanel.SlidingUpPanelLayout>

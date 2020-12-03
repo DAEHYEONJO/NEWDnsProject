@@ -5,55 +5,81 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:background="@drawable/execute_rectangle"
+    android:layout_margin="5dp"
     android:layout_height="wrap_content">
+
     <ImageView
+        android:layout_weight="1"
+        android:scaleType="centerInside"
         android:id="@+id/exeImg"
         android:layout_width="100dp"
         android:layout_height="100dp"
-        android:src="@drawable/common_google_signin_btn_icon_light"/>
+        android:src="@drawable/circle" />
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_weight="2"
         android:orientation="vertical">
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:orientation="horizontal">
+
             <TextView
+                android:fontFamily="@font/seoulhangangm"
                 android:id="@+id/exeName"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
+                android:gravity="center|left"
+                android:text="이름"
+                android:textColor="#FFFFFF"
                 android:textSize="20dp"
-                android:text="이름"/>
+                android:textStyle="bold" />
+
             <TextView
+                android:fontFamily="@font/seoulhangangm"
                 android:id="@+id/exeWeight"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
+                android:gravity="center|left"
+                android:text="이름"
+                android:textColor="#FFFFFF"
                 android:textSize="20dp"
-                android:text="이름"/>
+                android:textStyle="bold" />
 
         </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="50dp"
+            android:layout_weight="2"
             android:orientation="horizontal">
 
             <TextView
+                android:fontFamily="@font/seoulhangangm"
                 android:id="@+id/exeCount"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
+                android:gravity="center|left"
+                android:text="이름"
+                android:textColor="#FFFFFF"
                 android:textSize="20dp"
-                android:text="이름"/>
+                android:textStyle="bold" />
+
             <TextView
+                android:fontFamily="@font/seoulhangangm"
                 android:id="@+id/exeSetCount"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
+                android:gravity="center|left"
+                android:text="이름"
+                android:textColor="#FFFFFF"
                 android:textSize="20dp"
-                android:text="이름"/>
+                android:textStyle="bold" />
         </LinearLayout>
     </LinearLayout>
 
