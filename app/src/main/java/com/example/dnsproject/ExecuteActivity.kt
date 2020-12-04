@@ -178,8 +178,11 @@ class ExecuteActivity : AppCompatActivity() , AsrManager.UpdateResultListener, T
                 }
             }
         }
-        for(i in exerciseArray.indices)
-            curFixExercise.setExerciseCount(exerciseArray[i].name,exerciseArray[i].count)
+        for(i in exerciseArray.indices) {
+            curFixExercise.setExerciseCount(exerciseArray[i].name, exerciseArray[i].count)
+            Log.d("윤성테스트1204",exerciseArray[i].name+exerciseArray[i].count)
+
+        }
         Log.d("routine","finishiRoutine db저장할곳2")
         val databaseReference=FirebaseDatabase.getInstance().reference.child(key)
         val toDBFixExercise: MutableMap<String, FixExercise> = HashMap()
@@ -188,41 +191,46 @@ class ExecuteActivity : AppCompatActivity() , AsrManager.UpdateResultListener, T
         val todayExer : MutableMap<String, String> = HashMap()
 
         //하드코딩 ㅈㅅ
-        var exerSetCount =arrayOf(0,0,0,0,0,0,0,0,0,0)
-        var exerCount =arrayOf(0,0,0,0,0,0,0,0,0,0)
-        for(i in 0 until routineArray.size)
+        var exerSetCount =arrayOf(0,0,0,0,0)
+        var exerCount =arrayOf(0,0,0,0,0)
+        for(i in 0 until rNum)
         {
 
             //<<<<<<< bye
             if(routineArray[i].name=="benchpress")
             {
                 //idx=0
-                exerSetCount[0]++
-                exerCount[0] = exerCount[0]+routineArray[i].count.toString().toInt()
+                exerSetCount[0]+=1
+               // exerSetCount[0] = exerSetCount[0]+routineArray[i].setCount.toString().toInt()
+                //exerSetCount[0] =  exerCount[0]+routineArray[i].count.toString().toInt()
             }
             else if(routineArray[i].name=="shoulderpress")
             {
                 //idx=1
-                exerSetCount[1]++
-                exerCount[1] = exerCount[1]+routineArray[i].count.toString().toInt()
+                //exerSetCount[1] = exerSetCount[1]+routineArray[i].setCount.toString().toInt()
+                exerSetCount[1]+=1
+               // exerSetCount[1] = exerCount[1]+routineArray[i].count.toString().toInt()
             }
             else if(routineArray[i].name=="barbellcurls")
             {
                 //idx=2
-                exerSetCount[2]++
-                exerCount[2] = exerCount[2]+routineArray[i].count.toString().toInt()
+                //exerSetCount[2] = exerSetCount[2]+routineArray[i].setCount.toString().toInt()
+                exerSetCount[2]+=1
+                //exerSetCount[2] = exerCount[2]+routineArray[i].count.toString().toInt()
             }
             else if(routineArray[i].name=="deadlift")
             {
                 //idx=3
-                exerSetCount[3]++
-                exerCount[3] = exerCount[3]+routineArray[i].count.toString().toInt()
+                //exerSetCount[3] = exerSetCount[3]+routineArray[i].setCount.toString().toInt()
+                exerSetCount[3]+=1
+                //exerSetCount[3] = exerCount[3]+routineArray[i].count.toString().toInt()
             }
             else if(routineArray[i].name=="squat")
             {
                 //idx=4
-                exerSetCount[4]++
-                exerCount[4] = exerCount[4]+routineArray[i].count.toString().toInt()
+                //exerSetCount[4] = exerSetCount[4]+routineArray[i].setCount.toString().toInt()
+                exerSetCount[4]+=1
+                //exerSetCount[4] = exerCount[4]+routineArray[i].count.toString().toInt()
             }
 
         }
@@ -230,29 +238,29 @@ class ExecuteActivity : AppCompatActivity() , AsrManager.UpdateResultListener, T
         //파베 가져오기
 
         var ref = databaseReference.child("exerDate").child(onlyDate.toString())
-
+        /*
         ref.child("benchpress").setValue(0)
         ref.child("shoulderpress").setValue(0)
         ref.child("barbellcurls").setValue(0)
         ref.child("deadlift").setValue(0)
         ref.child("squat").setValue(0)
-
+        */
         ref.addListenerForSingleValueEvent(object : ValueEventListener
         {
             override fun onDataChange(snapshot: DataSnapshot) {
-                Log.d("윤성테스트", snapshot.value.toString())
+
                 if(snapshot.value.toString()!=null)
                 {
                     var ref3 = databaseReference.child("exerDate").child(onlyDate.toString()).child("benchpress")
-                    ref3.setValue((exerSetCount[0]).toString())
+                    ref3.setValue((snapshot.child("benchpress").value.toString().toInt()+(exerSetCount[0])).toString())
                     var ref4 = databaseReference.child("exerDate").child(onlyDate.toString()).child("shoulderpress")
-                    ref4.setValue((exerSetCount[1]).toString())
+                    ref4.setValue((snapshot.child("shoulderpress").value.toString().toInt()+(exerSetCount[1])).toString())
                     var ref5 = databaseReference.child("exerDate").child(onlyDate.toString()).child("barbellcurls")
-                    ref5.setValue((exerSetCount[2]).toString())
+                    ref5.setValue((snapshot.child("barbellcurls").value.toString().toInt()+(exerSetCount[2])).toString())
                     var ref6 = databaseReference.child("exerDate").child(onlyDate.toString()).child("deadlift")
-                    ref6.setValue((exerSetCount[3]).toString())
+                    ref6.setValue((snapshot.child("deadlift").value.toString().toInt()+(exerSetCount[3])).toString())
                     var ref7 = databaseReference.child("exerDate").child(onlyDate.toString()).child("squat")
-                    ref7.setValue((exerSetCount[4]).toString())
+                    ref7.setValue((snapshot.child("squat").value.toString().toInt()+(exerSetCount[4])).toString())
 
                 }
                 else
