@@ -30,20 +30,36 @@ class ExerciseRecordActivity : AppCompatActivity() {
 
         //i3일  i2월 i년
         MyCalendar.setOnDateChangeListener{ MyCalendar, i, i2, i3 ->
-            Toast.makeText(this@ExerciseRecordActivity, "Selected Date:$i3/$i2/$i", Toast.LENGTH_LONG).show()
-            var ref = databaseReference.child("exerDate").child(i.toString()+"-"+(i2.toInt()+1).toString()+"-"+i3.toString())
+            //Toast.makeText(this@ExerciseRecordActivity, "Selected Date:$i3/$i2/$i", Toast.LENGTH_LONG).show()
+            //i3는 일자   i2는 월
+
+            var monthNum=i2+1
+            var darStr = i3.toString()
+            var monthStr = monthNum.toString()
+
+            if(i3<10) darStr = "0$darStr"
+            if(monthNum<10) monthStr = "0$monthStr"
+
+            var ref = databaseReference.child("exerDate").child(i.toString()+"-"+monthStr+"-"+darStr)
             ref.addListenerForSingleValueEvent(object : ValueEventListener
             {
                 override fun onDataChange(snapshot: DataSnapshot) {
                     Log.d("윤성테스트", snapshot.value.toString())
+                    recordText.text=""
                     for(i in snapshot.children)
                     {
-                        if(i.value!="0")
+                        if(i.value.toString()!="0")
                         {
                             Log.d("윤성테스트2", i.key.toString()+"  "+i.value.toString())
                             recordText.text = recordText.text.toString() + i.key.toString()+"운동을 "+i.value.toString()+"세트 했습니다.\n"
                         }
+
                     }
+                    if(recordText.text.toString()=="")
+                    {
+                        recordText.text = "이 날은 운동을 한 기록이 없네요"
+                    }
+
                 }
 
                 override fun onCancelled(error: DatabaseError) {
