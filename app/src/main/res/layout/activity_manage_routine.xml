@@ -30,7 +30,7 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/routineRecyclerView"
         android:layout_width="match_parent"
-        android:layout_height="415dp" />
+        android:layout_height="wrap_content" />
 
     <Button
         android:fontFamily="@font/seoulhangangm"
