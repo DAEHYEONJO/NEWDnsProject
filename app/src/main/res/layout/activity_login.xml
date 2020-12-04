@@ -7,98 +7,108 @@
     android:background="#5D54A4"
     tools:context=".LoginActivity">
 
-    <EditText
-        android:id="@+id/IdText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginBottom="571dp"
-        android:background="@drawable/edit_design"
-        android:ems="10"
-        android:hint="ID 입력"
-        android:inputType="textPersonName"
-        android:textColor="#FFFFFF"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/textView3" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:orientation="vertical">
 
-    <EditText
-        android:id="@+id/PwText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="17dp"
-        android:background="@drawable/edit_design"
-        android:ems="10"
-        android:hint="비밀번호 입력"
-        android:inputType="textPersonName"
-        android:textColor="#FFFFFF"
-        app:layout_constraintStart_toStartOf="@+id/IdText"
-        app:layout_constraintTop_toBottomOf="@+id/IdText" />
+        <ImageView
+            android:id="@+id/imageView4"
+            android:layout_width="110dp"
+            android:layout_height="107dp"
+            android:layout_marginBottom="50"
+            android:foregroundGravity="center_vertical|center_horizontal"
+            app:srcCompat="@drawable/splash_dumbbell" />
 
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="20dp"
-        android:text="ID"
-        android:textColor="#FFFFFF"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        app:layout_constraintBaseline_toBaselineOf="@+id/IdText"
-        app:layout_constraintEnd_toStartOf="@+id/IdText" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:textAlignment="center">
 
-    <TextView
-        android:id="@+id/textView3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="30dp"
-        android:text="PASSWORD"
-        android:textColor="#FFFFFF"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        app:layout_constraintBaseline_toBaselineOf="@+id/PwText"
-        app:layout_constraintStart_toStartOf="parent" />
+            <TextView
+                android:id="@+id/textView2"
+                android:layout_width="30dp"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="20"
+                android:text="ID"
+                android:textColor="#FFFFFF"
+                android:textSize="18sp"
+                android:textStyle="bold" />
 
-    <Button
-        android:fontFamily="@font/seoulhangangm"
-        android:id="@+id/LoginButton"
-        android:layout_width="100dp"
-        android:layout_height="60dp"
-        android:layout_marginStart="70dp"
-        android:layout_marginTop="68dp"
-        android:backgroundTint="#FFFFFF"
-        android:text="로그인"
-        android:textColor="#000000"
-        android:textSize="16sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toStartOf="@+id/SignUpButton"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/PwText" />
+            <EditText
+                android:id="@+id/IdText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/edit_design"
+                android:ems="10"
+                android:hint="ID 입력"
+                android:inputType="textPersonName"
+                android:textColor="#FFFFFF" />
 
-    <Button
-        android:fontFamily="@font/seoulhangangm"
-        android:id="@+id/SignUpButton"
-        android:layout_width="100dp"
-        android:layout_height="60dp"
-        android:layout_marginEnd="70dp"
-        android:backgroundTint="#FFFFFF"
-        android:text="회원가입"
-        android:textColor="#000000"
-        android:textSize="16sp"
-        android:textStyle="bold"
-        app:layout_constraintBaseline_toBaselineOf="@+id/LoginButton"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/LoginButton" />
+        </LinearLayout>
 
-    <ImageView
-        android:id="@+id/imageView4"
-        android:layout_width="110dp"
-        android:layout_height="107dp"
-        android:layout_marginStart="150dp"
-        android:layout_marginTop="55dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/splash_dumbbell" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="50"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/textView3"
+                android:layout_width="30dp"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="20"
+                android:text="PW"
+                android:textColor="#FFFFFF"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <EditText
+                android:id="@+id/PwText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/edit_design"
+                android:ems="10"
+                android:hint="비밀번호 입력"
+                android:inputType="textPersonName"
+                android:textColor="#FFFFFF" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/LoginButton"
+                android:layout_width="100dp"
+                android:layout_height="60dp"
+                android:backgroundTint="#FFFFFF"
+                android:fontFamily="@font/seoulhangangm"
+                android:text="로그인"
+                android:textColor="#000000"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+            <Button
+                android:id="@+id/SignUpButton"
+                android:layout_width="100dp"
+                android:layout_height="60dp"
+                android:backgroundTint="#FFFFFF"
+                android:fontFamily="@font/seoulhangangm"
+                android:text="회원가입"
+                android:textColor="#000000"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

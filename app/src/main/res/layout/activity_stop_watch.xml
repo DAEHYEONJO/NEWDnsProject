@@ -119,38 +119,6 @@
         app:layout_constraintStart_toStartOf="@+id/view3"
         app:layout_constraintTop_toTopOf="@+id/view3" />
 
-    <Button
-        android:id="@+id/start"
-        android:layout_width="100dp"
-        android:layout_height="50dp"
-        android:layout_marginStart="82dp"
-        android:layout_marginBottom="151dp"
-        android:background="@drawable/button_rectangle"
-        android:fontFamily="@font/seoulhangangm"
-        android:text="시작"
-        android:textAlignment="center"
-        android:textColor="#FFFFFF"
-        android:textSize="20sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <Button
-        android:id="@+id/end"
-        android:layout_width="100dp"
-        android:layout_height="50dp"
-        android:layout_marginEnd="80dp"
-        android:layout_marginBottom="151dp"
-        android:background="@drawable/button_rectangle"
-        android:fontFamily="@font/seoulhangangm"
-        android:text="종료"
-        android:textAlignment="center"
-        android:textColor="#FFFFFF"
-        android:textSize="20sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
-
     <ToggleButton
         android:id="@+id/watch_asr_button"
         android:layout_width="100dp"
@@ -174,6 +142,44 @@
         app:layout_constraintEnd_toStartOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <LinearLayout
+        android:id="@+id/linearLayout2"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="57dp"
+        android:gravity="center_horizontal"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/view">
+
+        <Button
+            android:id="@+id/start"
+            android:layout_width="100dp"
+            android:layout_height="50dp"
+            android:layout_marginRight="20dp"
+            android:background="@drawable/button_rectangle"
+            android:fontFamily="@font/seoulhangangm"
+            android:text="시작"
+            android:textAlignment="center"
+            android:textColor="#FFFFFF"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <Button
+            android:id="@+id/end"
+            android:layout_width="100dp"
+            android:layout_height="50dp"
+            android:layout_marginBottom="151dp"
+            android:background="@drawable/button_rectangle"
+            android:fontFamily="@font/seoulhangangm"
+            android:text="종료"
+            android:textAlignment="center"
+            android:textColor="#FFFFFF"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+    </LinearLayout>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
