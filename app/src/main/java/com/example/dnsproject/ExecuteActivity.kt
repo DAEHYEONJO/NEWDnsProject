@@ -41,7 +41,7 @@ import kotlin.properties.Delegates
  */
 @RequiresApi(Build.VERSION_CODES.N)
 class ExecuteActivity : AppCompatActivity() , AsrManager.UpdateResultListener, TriggerWordDetectionManager.UpdateResultListener {
-    val COUNTTIME : Long = 300 //운동 count시간 0.5초로 해둠->0.5로바꿈
+    val COUNTTIME : Long = 500 //운동 count시간 0.5초로 해둠->0.5로바꿈
     lateinit var mRoutine:Routine
     lateinit var routineArray: ArrayList<Exercise>
     lateinit var fixExercise: FixExercise
@@ -49,6 +49,7 @@ class ExecuteActivity : AppCompatActivity() , AsrManager.UpdateResultListener, T
     private var routineSize:Int = 3
     var rNum : Int = 0
     private var setNum=0
+    private var curExerciseName=""
 
 
     /* tts & pcm file path */
@@ -82,25 +83,31 @@ class ExecuteActivity : AppCompatActivity() , AsrManager.UpdateResultListener, T
         }
         else{
             if(restFlag){ // 휴식타이머
-                setNum=0
+                Log.d("운동","휴식타이머 : "+setNum.toString())
                 rNum--
                 ttsManager.playPcmForFileModeStart(restStartPcm)
-                runOnUiThread{current_action.text = "휴식^^"
-                    set_num.visibility-View.GONE
+                runOnUiThread{
+                    current_action.text = "휴식^^"
+                    remain_time.visibility=View.GONE
                    /* progress_circular.setClockwise(true)
                     progress_circular.foregroundProgressColor= Color.BLACK
                     progress_circular.backgroundProgressColor=Color.WHITE
                     val listener=progress_circular.setProgressWithAnimation(0F,500)*/
                 }
 
-                myTimer = MyTimer(200, 1000)
+                myTimer = MyTimer(10000, 1000)
                 myTimer.start()
 
             }
             else{
-                setNum++
+                Log.d("운동","운동 : "+setNum.toString())
+                if(curExerciseName==routineArray[rNum].name){
+                    setNum++
+                }else{
+                    setNum=1
+                    curExerciseName=routineArray[rNum].name
+                }
                 runOnUiThread{
-                    set_num.visibility=View.VISIBLE
                     current_action.text = routineArray[rNum].name
                     set_num.text=setNum.toString()+" / "+routineArray[rNum].setCount+"세트"
                 }
@@ -137,6 +144,7 @@ class ExecuteActivity : AppCompatActivity() , AsrManager.UpdateResultListener, T
             }
         }
         routineSize = routineArray.size
+        curExerciseName=routineArray[0].name
         restFlag = false // 루틴시작
     }
 
@@ -158,11 +166,6 @@ class ExecuteActivity : AppCompatActivity() , AsrManager.UpdateResultListener, T
         exerciseArray.add(shortExercise("deadlift",fixExercise.deadLiftCount))
         exerciseArray.add(shortExercise("shoulderpress",fixExercise.shoulderPressCount))
         exerciseArray.add(shortExercise("squat",fixExercise.squatCount))
-        exerciseArray.add(shortExercise("crunch",fixExercise.crunchCount))
-        exerciseArray.add(shortExercise("plankJump",fixExercise.plankJumpCount))
-        exerciseArray.add(shortExercise("burpee",fixExercise.burpeeTestCount))
-        exerciseArray.add(shortExercise("lunge",fixExercise.lungeCount))
-        exerciseArray.add(shortExercise("pullUp",fixExercise.pullUpCount))
         for(i in 0 until rNum){
             Log.d("routine name",routineArray[i].name+"/"+routineArray[i].count)
             for(element in exerciseArray){
@@ -221,36 +224,6 @@ class ExecuteActivity : AppCompatActivity() , AsrManager.UpdateResultListener, T
                 exerSetCount[4]++
                 exerCount[4] = exerCount[4]+routineArray[i].count.toString().toInt()
             }
-            else if(routineArray[i].name=="crunch")
-            {
-                //idx=4
-                exerSetCount[5]++
-                exerCount[5] = exerCount[5]+routineArray[i].count.toString().toInt()
-            }
-            else if(routineArray[i].name=="plankJump")
-            {
-                //idx=4
-                exerSetCount[6]++
-                exerCount[6] = exerCount[6]+routineArray[i].count.toString().toInt()
-            }
-            else if(routineArray[i].name=="burpee")
-            {
-                //idx=4
-                exerSetCount[7]++
-                exerCount[7] = exerCount[7]+routineArray[i].count.toString().toInt()
-            }
-            else if(routineArray[i].name=="lunge")
-            {
-                //idx=4
-                exerSetCount[8]++
-                exerCount[8] = exerCount[8]+routineArray[i].count.toString().toInt()
-            }
-            else if(routineArray[i].name=="pullUp")
-            {
-                //idx=4
-                exerSetCount[9]++
-                exerCount[9] = exerCount[9]+routineArray[i].count.toString().toInt()
-            }
 
         }
 
@@ -263,11 +236,6 @@ class ExecuteActivity : AppCompatActivity() , AsrManager.UpdateResultListener, T
         ref.child("barbellcurls").setValue(0)
         ref.child("deadlift").setValue(0)
         ref.child("squat").setValue(0)
-        ref.child("crunch").setValue(0)
-        ref.child("plankJump").setValue(0)
-        ref.child("burpee").setValue(0)
-        ref.child("lunge").setValue(0)
-        ref.child("pullUp").setValue(0)
 
         ref.addListenerForSingleValueEvent(object : ValueEventListener
         {
@@ -285,16 +253,6 @@ class ExecuteActivity : AppCompatActivity() , AsrManager.UpdateResultListener, T
                     ref6.setValue((exerSetCount[3]).toString())
                     var ref7 = databaseReference.child("exerDate").child(onlyDate.toString()).child("squat")
                     ref7.setValue((exerSetCount[4]).toString())
-                    var ref8 = databaseReference.child("exerDate").child(onlyDate.toString()).child("crunch")
-                    ref8.setValue((exerSetCount[5]).toString())
-                    var ref9 = databaseReference.child("exerDate").child(onlyDate.toString()).child("plankJump")
-                    ref9.setValue((exerSetCount[6]).toString())
-                    var ref10 = databaseReference.child("exerDate").child(onlyDate.toString()).child("burpee")
-                    ref10.setValue((exerSetCount[7]).toString())
-                    var ref11 = databaseReference.child("exerDate").child(onlyDate.toString()).child("lunge")
-                    ref11.setValue((exerSetCount[8]).toString())
-                    var ref12 = databaseReference.child("exerDate").child(onlyDate.toString()).child("pullUp")
-                    ref12.setValue((exerSetCount[9]).toString())
 
                 }
                 else
@@ -336,16 +294,19 @@ class ExecuteActivity : AppCompatActivity() , AsrManager.UpdateResultListener, T
                     Toast.makeText(this@ExecuteActivity,"10초남음",Toast.LENGTH_SHORT).show()
                     ttsManager.playPcmForFileModeStart(tenSecPcm)
                 }
-                runOnUiThread{remain_time.text = (millisUntilFinished / 1000.toLong()).toString() + " 초"}
+                runOnUiThread{set_num.text = (millisUntilFinished / 1000.toLong()).toString() + " 초"}
             }
             else{//운동 타이머
-                runOnUiThread{remain_time.text = (millisUntilFinished / COUNTTIME.toLong()).toString() + " 개"}
+                runOnUiThread{
+                    remain_time.visibility=View.VISIBLE
+                    remain_time.text = (millisUntilFinished / COUNTTIME.toLong()).toString() + " 개"}
             }
         }
 
 
         override fun onFinish() {
             Log.d("timer","onfinish timer")
+            remain_time.text=""
             remain_time.text = "finish"
             rNum += 1
             Log.d("timer",rNum.toString())
