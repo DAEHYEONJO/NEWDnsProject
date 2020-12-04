@@ -14,6 +14,7 @@ import com.example.dnsproject.exeClasses.User
 import com.google.firebase.database.*
 import com.google.gson.Gson
 import kotlinx.android.synthetic.main.activity_login.*
+import java.time.LocalDate
 
 
 class LoginActivity : AppCompatActivity() {
@@ -46,6 +47,17 @@ class LoginActivity : AppCompatActivity() {
                                 flag =!flag
                                 var userData= Gson().fromJson(i.value.toString(),User::class.java)
                                 Toast.makeText(this@LoginActivity, "로그인 성공", Toast.LENGTH_LONG).show()
+
+                                val onlyDate: LocalDate = LocalDate.now()
+                                val databaseReference=FirebaseDatabase.getInstance().reference.child(i.key.toString())
+                                var ref = databaseReference.child("exerDate").child(onlyDate.toString())
+
+                                ref.child("benchpress").setValue(0)
+                                ref.child("shoulderpress").setValue(0)
+                                ref.child("barbellcurls").setValue(0)
+                                ref.child("deadlift").setValue(0)
+                                ref.child("squat").setValue(0)
+
                                 if(flag){
                                     val nextIntent = Intent(this@LoginActivity, MainActivity::class.java)
                                     nextIntent.putExtra("nameKey", userData)

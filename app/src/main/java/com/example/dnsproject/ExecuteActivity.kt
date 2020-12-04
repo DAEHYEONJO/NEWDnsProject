@@ -230,29 +230,36 @@ class ExecuteActivity : AppCompatActivity() , AsrManager.UpdateResultListener, T
         //파베 가져오기
 
         var ref = databaseReference.child("exerDate").child(onlyDate.toString())
-
+        /*
         ref.child("benchpress").setValue(0)
         ref.child("shoulderpress").setValue(0)
         ref.child("barbellcurls").setValue(0)
         ref.child("deadlift").setValue(0)
         ref.child("squat").setValue(0)
-
+        */
         ref.addListenerForSingleValueEvent(object : ValueEventListener
         {
             override fun onDataChange(snapshot: DataSnapshot) {
                 Log.d("윤성테스트", snapshot.value.toString())
+                Log.d("윤성테스트222", "벤치"+snapshot.child("benchpress").value.toString())
+                Log.d("윤성테스트222", "숄더"+snapshot.child("shoulderpress").value.toString())
+                Log.d("윤성테스트222", "바벨"+snapshot.child("barbellcurls").value.toString())
+                Log.d("윤성테스트222", "데드"+snapshot.child("deadlift").value.toString())
+                Log.d("윤성테스트222", "스쿼트"+snapshot.child("squat").value.toString())
+
+
                 if(snapshot.value.toString()!=null)
                 {
                     var ref3 = databaseReference.child("exerDate").child(onlyDate.toString()).child("benchpress")
-                    ref3.setValue((exerSetCount[0]).toString())
+                    ref3.setValue((snapshot.child("benchpress").value.toString().toInt()+(exerSetCount[0])).toString())
                     var ref4 = databaseReference.child("exerDate").child(onlyDate.toString()).child("shoulderpress")
-                    ref4.setValue((exerSetCount[1]).toString())
+                    ref4.setValue((snapshot.child("shoulderpress").value.toString().toInt()+(exerSetCount[1])).toString())
                     var ref5 = databaseReference.child("exerDate").child(onlyDate.toString()).child("barbellcurls")
-                    ref5.setValue((exerSetCount[2]).toString())
+                    ref5.setValue((snapshot.child("barbellcurls").value.toString().toInt()+(exerSetCount[2])).toString())
                     var ref6 = databaseReference.child("exerDate").child(onlyDate.toString()).child("deadlift")
-                    ref6.setValue((exerSetCount[3]).toString())
+                    ref6.setValue((snapshot.child("deadlift").value.toString().toInt()+(exerSetCount[3])).toString())
                     var ref7 = databaseReference.child("exerDate").child(onlyDate.toString()).child("squat")
-                    ref7.setValue((exerSetCount[4]).toString())
+                    ref7.setValue((snapshot.child("squat").value.toString().toInt()+(exerSetCount[4])).toString())
 
                 }
                 else
