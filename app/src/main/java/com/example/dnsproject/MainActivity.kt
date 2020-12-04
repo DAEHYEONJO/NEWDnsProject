@@ -338,6 +338,11 @@ class MainActivity : AppCompatActivity() , AsrManager.UpdateResultListener, Trig
                     Toast.makeText(this, "세번째 성공", Toast.LENGTH_SHORT).show()
                     routineNum = 2
                 }
+                else if(str!!.contains("네번째", true)){
+                    Log.d("TAG", "네번째 성공")
+                    Toast.makeText(this, "네번째 성공", Toast.LENGTH_SHORT).show()
+                    routineNum = 2
+                }
 
                 val intent = Intent(this@MainActivity, ExecuteActivity::class.java)
 
