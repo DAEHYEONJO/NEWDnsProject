@@ -178,8 +178,11 @@ class ExecuteActivity : AppCompatActivity() , AsrManager.UpdateResultListener, T
                 }
             }
         }
-        for(i in exerciseArray.indices)
-            curFixExercise.setExerciseCount(exerciseArray[i].name,exerciseArray[i].count)
+        for(i in exerciseArray.indices) {
+            curFixExercise.setExerciseCount(exerciseArray[i].name, exerciseArray[i].count)
+            Log.d("윤성테스트1204",exerciseArray[i].name+exerciseArray[i].count)
+
+        }
         Log.d("routine","finishiRoutine db저장할곳2")
         val databaseReference=FirebaseDatabase.getInstance().reference.child(key)
         val toDBFixExercise: MutableMap<String, FixExercise> = HashMap()
@@ -188,41 +191,46 @@ class ExecuteActivity : AppCompatActivity() , AsrManager.UpdateResultListener, T
         val todayExer : MutableMap<String, String> = HashMap()
 
         //하드코딩 ㅈㅅ
-        var exerSetCount =arrayOf(0,0,0,0,0,0,0,0,0,0)
-        var exerCount =arrayOf(0,0,0,0,0,0,0,0,0,0)
-        for(i in 0 until routineArray.size)
+        var exerSetCount =arrayOf(0,0,0,0,0)
+        var exerCount =arrayOf(0,0,0,0,0)
+        for(i in 0 until rNum)
         {
 
             //<<<<<<< bye
             if(routineArray[i].name=="benchpress")
             {
                 //idx=0
-                exerSetCount[0]++
-                exerCount[0] = exerCount[0]+routineArray[i].count.toString().toInt()
+                exerSetCount[0]+=1
+               // exerSetCount[0] = exerSetCount[0]+routineArray[i].setCount.toString().toInt()
+                //exerSetCount[0] =  exerCount[0]+routineArray[i].count.toString().toInt()
             }
             else if(routineArray[i].name=="shoulderpress")
             {
                 //idx=1
-                exerSetCount[1]++
-                exerCount[1] = exerCount[1]+routineArray[i].count.toString().toInt()
+                //exerSetCount[1] = exerSetCount[1]+routineArray[i].setCount.toString().toInt()
+                exerSetCount[1]+=1
+               // exerSetCount[1] = exerCount[1]+routineArray[i].count.toString().toInt()
             }
             else if(routineArray[i].name=="barbellcurls")
             {
                 //idx=2
-                exerSetCount[2]++
-                exerCount[2] = exerCount[2]+routineArray[i].count.toString().toInt()
+                //exerSetCount[2] = exerSetCount[2]+routineArray[i].setCount.toString().toInt()
+                exerSetCount[2]+=1
+                //exerSetCount[2] = exerCount[2]+routineArray[i].count.toString().toInt()
             }
             else if(routineArray[i].name=="deadlift")
             {
                 //idx=3
-                exerSetCount[3]++
-                exerCount[3] = exerCount[3]+routineArray[i].count.toString().toInt()
+                //exerSetCount[3] = exerSetCount[3]+routineArray[i].setCount.toString().toInt()
+                exerSetCount[3]+=1
+                //exerSetCount[3] = exerCount[3]+routineArray[i].count.toString().toInt()
             }
             else if(routineArray[i].name=="squat")
             {
                 //idx=4
-                exerSetCount[4]++
-                exerCount[4] = exerCount[4]+routineArray[i].count.toString().toInt()
+                //exerSetCount[4] = exerSetCount[4]+routineArray[i].setCount.toString().toInt()
+                exerSetCount[4]+=1
+                //exerSetCount[4] = exerCount[4]+routineArray[i].count.toString().toInt()
             }
 
         }
@@ -240,13 +248,6 @@ class ExecuteActivity : AppCompatActivity() , AsrManager.UpdateResultListener, T
         ref.addListenerForSingleValueEvent(object : ValueEventListener
         {
             override fun onDataChange(snapshot: DataSnapshot) {
-                Log.d("윤성테스트", snapshot.value.toString())
-                Log.d("윤성테스트222", "벤치"+snapshot.child("benchpress").value.toString())
-                Log.d("윤성테스트222", "숄더"+snapshot.child("shoulderpress").value.toString())
-                Log.d("윤성테스트222", "바벨"+snapshot.child("barbellcurls").value.toString())
-                Log.d("윤성테스트222", "데드"+snapshot.child("deadlift").value.toString())
-                Log.d("윤성테스트222", "스쿼트"+snapshot.child("squat").value.toString())
-
 
                 if(snapshot.value.toString()!=null)
                 {
