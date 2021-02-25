@@ -17,6 +17,10 @@ class ExerAdapter(val mData: ArrayList<Routine>, private val layoutInflater: Lay
         lateinit var routineName:TextView
         init {
             routineName=itemView.findViewById(R.id.routineName)
+            val position=adapterPosition
+            itemView.setOnClickListener {
+
+            }
         }
     }
 

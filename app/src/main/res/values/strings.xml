@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">DnsProject</string>
+    <string name="app_name">헬스갤러리</string>
     <string name="language">Language</string>
     <string name="keyword">Keyword</string>
     <string name="sensitivity">Sensitivity</string>

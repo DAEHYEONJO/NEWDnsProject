@@ -110,7 +110,7 @@ class MainActivity : AppCompatActivity() , AsrManager.UpdateResultListener, Trig
                 3->{
                     fixExercise=data.getSerializableExtra("fixExercise") as FixExercise
                     Log.d("db","전달됐나?"+fixExercise.benchPressCount.toString())
-                    Toast.makeText(this,fixExercise.benchPressCount.toString(),Toast.LENGTH_SHORT).show()
+                    //Toast.makeText(this,fixExercise.benchPressCount.toString(),Toast.LENGTH_SHORT).show()
                 }
             }
         }
@@ -324,23 +324,23 @@ class MainActivity : AppCompatActivity() , AsrManager.UpdateResultListener, Trig
             Log.d("exeLoglOG",str)
             if(str!!.contains("실행", true)||str!!.contains("루팅", true)||str!!.contains("루틴", true)){
                 if(str!!.contains("첫번째", true)){
-                    Toast.makeText(this, "첫번째 성공", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, "첫번째 루틴", Toast.LENGTH_SHORT).show()
                     Log.d("TAG", "첫번째 성공")
                     routineNum = 0
                 }
                 else if(str!!.contains("두번째", true)){
                     Log.d("TAG", "두번째 성공")
-                    Toast.makeText(this, "두번째 성공", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, "두번째 루틴", Toast.LENGTH_SHORT).show()
                     routineNum = 1
                 }
                 else if(str!!.contains("세번째", true)){
                     Log.d("TAG", "세번째 성공")
-                    Toast.makeText(this, "세번째 성공", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, "세번째 루틴", Toast.LENGTH_SHORT).show()
                     routineNum = 2
                 }
                 else if(str!!.contains("네번째", true)){
                     Log.d("TAG", "네번째 성공")
-                    Toast.makeText(this, "네번째 성공", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, "네번째 루틴", Toast.LENGTH_SHORT).show()
                     routineNum = 2
                 }
 

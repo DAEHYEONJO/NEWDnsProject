@@ -41,7 +41,7 @@ import kotlin.properties.Delegates
  */
 @RequiresApi(Build.VERSION_CODES.N)
 class ExecuteActivity : AppCompatActivity() , AsrManager.UpdateResultListener, TriggerWordDetectionManager.UpdateResultListener {
-    val COUNTTIME : Long = 500 //운동 count시간 0.5초로 해둠->0.5로바꿈
+    val COUNTTIME : Long = 3000 //운동 count시간 0.5초로 해둠->0.5로바꿈
     lateinit var mRoutine:Routine
     lateinit var routineArray: ArrayList<Exercise>
     lateinit var fixExercise: FixExercise
@@ -95,7 +95,7 @@ class ExecuteActivity : AppCompatActivity() , AsrManager.UpdateResultListener, T
                     val listener=progress_circular.setProgressWithAnimation(0F,500)*/
                 }
 
-                myTimer = MyTimer(10000, 1000)
+                myTimer = MyTimer(30000, 1000)
                 myTimer.start()
 
             }

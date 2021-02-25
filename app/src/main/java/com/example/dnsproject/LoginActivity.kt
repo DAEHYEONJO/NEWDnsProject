@@ -29,7 +29,7 @@ class LoginActivity : AppCompatActivity() {
         setContentView(R.layout.activity_login)
 
         LoginButton.setOnClickListener {
-            Toast.makeText(this@LoginActivity,"로그인버튼",Toast.LENGTH_SHORT).show()
+            //Toast.makeText(this@LoginActivity,"로그인버튼",Toast.LENGTH_SHORT).show()
             flag=false
             userRef.addListenerForSingleValueEvent(object : ValueEventListener {
                     override fun onCancelled(error: DatabaseError) {
@@ -46,7 +46,7 @@ class LoginActivity : AppCompatActivity() {
                                 Log.d("db", "맞음 ")
                                 flag =!flag
                                 var userData= Gson().fromJson(i.value.toString(),User::class.java)
-                                Toast.makeText(this@LoginActivity, "로그인 성공", Toast.LENGTH_LONG).show()
+                                //Toast.makeText(this@LoginActivity, "로그인 성공", Toast.LENGTH_LONG).show()
                                 val databaseReference=FirebaseDatabase.getInstance().reference.child(i.key.toString())
                                 //디폴트로 11/15, 11/18, 11/27 넣어놓음
                                 var refDefalut1 = databaseReference.child("exerDate").child("2020-11-15")

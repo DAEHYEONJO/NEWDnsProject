@@ -53,7 +53,7 @@ class MakeRoutineActivity : AppCompatActivity() {
                textView의 내용을 "nameKey" key에서 꺼내온 값으로 바꾼다 */
             //Toast.makeText(this, curRoutine[0].name, Toast.LENGTH_SHORT).show()
         } else {
-            Toast.makeText(this, "전달된 이름이 없습니다", Toast.LENGTH_SHORT).show()
+            //Toast.makeText(this, "전달된 이름이 없습니다", Toast.LENGTH_SHORT).show()
         }
 
         exerSpinner.adapter=ArrayAdapter<String>(
@@ -70,14 +70,9 @@ class MakeRoutineActivity : AppCompatActivity() {
                     "바벨컬"->{exeName="barbellcurls"}
                     "데드리프트"->{exeName="deadlift"}
                     "스쿼트"->{exeName="squat"}
-                    "크런치"->{exeName="crunch"}
-                    "플랭크점프"->{exeName="plankJump"}
-                    "버피테스트"->{exeName="burpee"}
-                    "런지"->{exeName="lunge"}
-                    "턱걸이"->{exeName="pullUp"}
                     else->{exeName="없음"}
                 }
-                Toast.makeText(this@MakeRoutineActivity, exeName, Toast.LENGTH_SHORT).show()
+                //.makeText(this@MakeRoutineActivity, exeName, Toast.LENGTH_SHORT).show()
             }
             override fun onNothingSelected(p0: AdapterView<*>?) {
 
@@ -93,7 +88,7 @@ class MakeRoutineActivity : AppCompatActivity() {
             override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
                 exeSetCount=p0?.getItemAtPosition(p2) as String
                 exeSetCount=exeSetCount.slice(IntRange(0, 0))
-                Toast.makeText(this@MakeRoutineActivity, exeSetCount, Toast.LENGTH_SHORT).show()
+                //Toast.makeText(this@MakeRoutineActivity, exeSetCount, Toast.LENGTH_SHORT).show()
             }
             override fun onNothingSelected(p0: AdapterView<*>?) {
 
@@ -108,7 +103,7 @@ class MakeRoutineActivity : AppCompatActivity() {
             override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
                 exeCount=p0?.getItemAtPosition(p2) as String
                 exeCount=exeCount.slice(IntRange(0, 1))
-                Toast.makeText(this@MakeRoutineActivity, exeCount, Toast.LENGTH_SHORT).show()
+               //Toast.makeText(this@MakeRoutineActivity, exeCount, Toast.LENGTH_SHORT).show()
             }
             override fun onNothingSelected(p0: AdapterView<*>?) {
 
@@ -124,7 +119,7 @@ class MakeRoutineActivity : AppCompatActivity() {
             override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
                 exeWeight=p0?.getItemAtPosition(p2) as String
                 exeWeight=exeWeight.slice(IntRange(0, 2))
-                Toast.makeText(this@MakeRoutineActivity, exeWeight, Toast.LENGTH_SHORT).show()
+                // Toast.makeText(this@MakeRoutineActivity, exeWeight, Toast.LENGTH_SHORT).show()
             }
             override fun onNothingSelected(p0: AdapterView<*>?) {
 
